@@ -31,6 +31,12 @@ export const getViewTypeList = lang => {
       value: Gantt.ESightValues.day,
     },
     {
+      //3 day
+      type: 'threeDay',
+      label: lang === 'zh-CN' ? '3日视图' : '3 Day',
+      value: Gantt.ESightValues.threeDay,
+    },
+    {
       type: 'week',
       label: lang === 'zh-CN' ? '周视图' : 'Week',
       value: Gantt.ESightValues.week,
@@ -347,6 +353,7 @@ class GanttStore {
   getMajorList(): Gantt.Major[] {
     const majorFormatMap: { [key in Gantt.Sight]: string } = {
       day: this.lang === 'zh-CN' ? 'YYYY年MM月' : 'YYYY, MMMM',
+      threeDay: this.lang === 'zh-CN' ? 'YYYY年MM月' : 'YYYY, MMMM',
       week: this.lang === 'zh-CN' ? 'YYYY年MM月' : 'YYYY, MMMM',
       month: this.lang === 'zh-CN' ? 'YYYY年' : 'YYYY',
       quarter: this.lang === 'zh-CN' ? 'YYYY年' : 'YYYY',
@@ -422,6 +429,7 @@ class GanttStore {
   getMinorList(): Gantt.Minor[] {
     const minorFormatMap = {
       day: this.lang === 'zh-CN' ? 'YYYY-MM-D' : 'D',
+      threeDay: this.lang === 'zh-CN' ? 'YYYY-MM-D' : 'D',
       week: this.lang === 'zh-CN' ? 'YYYY-w周' : 'wo [week]',
       month: this.lang === 'zh-CN' ? 'YYYY-MM月' : 'MMMM',
       quarter: this.lang === 'zh-CN' ? 'YYYY-第Q季' : '[Q]Q',
@@ -438,6 +446,9 @@ class GanttStore {
       const map = {
         day() {
           return start.add(1, 'day')
+        },
+        threeDay() {
+          return start.add(3, 'day')
         },
         week() {
           return start.add(1, 'week')
@@ -458,6 +469,9 @@ class GanttStore {
     const setStart = (date: Dayjs) => {
       const map = {
         day() {
+          return date.startOf('day')
+        },
+        threeDay() {
           return date.startOf('day')
         },
         week() {
@@ -482,6 +496,9 @@ class GanttStore {
       const map = {
         day() {
           return start.endOf('day')
+        },
+        threeDay() {
+          return start.add(2, 'day').endOf('day')
         },
         week() {
           return start.weekday(7).hour(23).minute(59).second(59)
@@ -575,6 +592,7 @@ class GanttStore {
 
     const map = {
       day: dayRect,
+      threeDay: dayRect,
       week: weekRect,
       month: weekRect,
       quarter: monthRect,

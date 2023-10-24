@@ -1,6 +1,6 @@
-import React from 'react'
-import RcGantt from 'rc-gantt'
 import dayjs from 'dayjs'
+import RcGantt from 'rc-gantt'
+import React from 'react'
 
 interface Data {
   name: string
@@ -17,6 +17,7 @@ const data = Array.from({ length: 100 }).fill({
 const App = () => (
   <div style={{ width: '100%', height: 500 }}>
     <RcGantt<Data>
+      lang='en-US'
       data={data}
       columns={[
         {
