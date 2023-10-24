@@ -4,6 +4,7 @@ export const enUS: GanttLocale = Object.freeze({
     today: "Today",
     day: "Day",
     days: "Days",
+    threeDay: "3 Days",
     week: "Week",
     month: "Month",
     quarter: "Quarter",
@@ -12,6 +13,7 @@ export const enUS: GanttLocale = Object.freeze({
     secondHalf: "Second half",
     majorFormat: {
       day: "YYYY, MMMM",
+      threeDay: "YYYY, MMMM",
       week: "YYYY, MMMM",
       month: "YYYY",
       quarter: "YYYY",
@@ -19,6 +21,7 @@ export const enUS: GanttLocale = Object.freeze({
     },
     minorFormat: {
       day: "D",
+      threeDay: "D",
       week: "wo [week]",
       month: "MMMM",
       quarter: "[Q]Q",

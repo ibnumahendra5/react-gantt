@@ -31,6 +31,12 @@ export const getViewTypeList = locale => {
       value: Gantt.ESightValues.day,
     },
     {
+      //3 day
+      type: 'threeDay',
+      label: locale.threeDay,
+      value: Gantt.ESightValues.threeDay,
+    },
+    {
       type: 'week',
       label: locale.week,
       value: Gantt.ESightValues.week,
@@ -348,6 +354,7 @@ class GanttStore {
   getMajorList(): Gantt.Major[] {
     const majorFormatMap: { [key in Gantt.Sight]: string } = {
       day: this.locale.majorFormat.day,
+      threeDay: this.locale.majorFormat.threeDay,
       week: this.locale.majorFormat.week,
       month: this.locale.majorFormat.month,
       quarter: this.locale.majorFormat.quarter,
@@ -423,6 +430,7 @@ class GanttStore {
   getMinorList(): Gantt.Minor[] {
     const minorFormatMap = {
       day: this.locale.minorFormat.day,
+      threeDay: this.locale.minorFormat.threeDay,
       week: this.locale.minorFormat.week,
       month: this.locale.minorFormat.month,
       quarter: this.locale.minorFormat.quarter,
@@ -439,6 +447,9 @@ class GanttStore {
       const map = {
         day() {
           return start.add(1, 'day')
+        },
+        threeDay() {
+          return start.add(3, 'day')
         },
         week() {
           return start.add(1, 'week')
@@ -459,6 +470,9 @@ class GanttStore {
     const setStart = (date: Dayjs) => {
       const map = {
         day() {
+          return date.startOf('day')
+        },
+        threeDay() {
           return date.startOf('day')
         },
         week() {
@@ -483,6 +497,9 @@ class GanttStore {
       const map = {
         day() {
           return start.endOf('day')
+        },
+        threeDay() {
+          return start.add(2, 'day').endOf('day')
         },
         week() {
           return start.weekday(7).hour(23).minute(59).second(59)
@@ -572,6 +589,7 @@ class GanttStore {
 
     const map = {
       day: dayRect,
+      threeDay: dayRect,
       week: weekRect,
       month: weekRect,
       quarter: monthRect,

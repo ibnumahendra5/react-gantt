@@ -66,7 +66,7 @@ export interface GanttProps<RecordType = DefaultRecordType> {
    * 自定义日期筛选维度
    */
   customSights?: Gantt.SightConfig[]
-  locale?: GanttLocale;
+  locale?: GanttLocale
 
   /**
    * 隐藏左侧表格
@@ -79,32 +79,35 @@ export interface GanttRef {
 }
 
 export interface GanttLocale {
-  today: string;
-  day: string;
-  days: string;
-  week: string;
-  month: string;
-  quarter: string;
-  halfYear: string;
-  firstHalf: string;
-  secondHalf: string,
+  today: string
+  day: string
+  days: string
+  threeDay: string
+  week: string
+  month: string
+  quarter: string
+  halfYear: string
+  firstHalf: string
+  secondHalf: string
   majorFormat: {
-    day: string;
-    week: string;
-    month: string;
-    quarter: string;
-    halfYear: string;
-  },
+    day: string
+    threeDay: string
+    week: string
+    month: string
+    quarter: string
+    halfYear: string
+  }
   minorFormat: {
-    day: string;
-    week: string;
-    month: string;
-    quarter: string;
-    halfYear: string;
+    day: string
+    threeDay: string
+    week: string
+    month: string
+    quarter: string
+    halfYear: string
   }
 }
 
-export const defaultLocale: GanttLocale = {...zhCN};
+export const defaultLocale: GanttLocale = { ...zhCN }
 
 const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<RecordType>) => {
   const {
@@ -137,7 +140,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
     renderRightText,
     onExpand,
     customSights = [],
-    locale = {...defaultLocale},
+    locale = { ...defaultLocale },
     hideTable = false,
   } = props
 

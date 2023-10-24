@@ -4,6 +4,7 @@ export const zhCN: GanttLocale = Object.freeze({
   today: "今天",
   day: "日视图",
   days: "天数",
+  threeDay: "三日视图",
   week: "周视图",
   month: "月视图",
   quarter: "季视图",
@@ -12,6 +13,7 @@ export const zhCN: GanttLocale = Object.freeze({
   secondHalf: "下半年",
   majorFormat: {
     day: "YYYY年MM月",
+    threeDay: "YYYY年MM月",
     week: "YYYY年MM月",
     month: "YYYY年",
     quarter: "YYYY年",
@@ -19,6 +21,7 @@ export const zhCN: GanttLocale = Object.freeze({
   },
   minorFormat: {
     day: "YYYY-MM-D",
+    threeDay: "YYYY-MM-D",
     week: "YYYY-w周",
     month: "YYYY-MM月",
     quarter: "YYYY-第Q季",

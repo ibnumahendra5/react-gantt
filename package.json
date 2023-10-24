@@ -1,13 +1,13 @@
 {
   "name": "rc-gantt",
-  "version": "0.3.1",
-  "homepage": "https://ahwgs.github.io/react-gantt/#/",
+  "version": "0.2.0",
+  "homepage": "https://github.com/ibnumahendra5/react-gantt/#/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahwgs/react-gantt.git"
+    "url": "git+https://github.com/ibnumahendra5/react-gantt.git"
   },
   "license": "MIT",
-  "author": "ahwgs <ah_wgs@126.com>",
+  "author": "ahwgs <ah_wgs@126.com> and ibnu",
   "module": "dist/index.esm.js",
   "typings": "dist/types/index.d.ts",
   "files": [

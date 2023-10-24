@@ -133,7 +133,7 @@ export interface Bar<RecordType = DefaultRecordType> {
 ### `Sight` 定义
 
 ```typescript
-export type Sight = 'day' | 'week' | 'month' | 'quarter' | 'halfYear'
+export type Sight = 'day' | 'threeDay' | 'week' | 'month' | 'quarter' | 'halfYear'
 ```
 
 ## API

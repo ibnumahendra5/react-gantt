@@ -1,12 +1,17 @@
 import dayjs from 'dayjs'
 import RcGantt, { Gantt, GanttRef } from 'rc-gantt'
 import React, { useRef, useState } from 'react'
+interface Data {
+  name: string
+  startDate: string
+  endDate: string
+}
 
 const data = Array.from({ length: 100 }).fill({
   name: '一个名称一个名称一个名称一个名称',
   startDate: dayjs().format('YYYY-MM-DD'),
   endDate: dayjs().add(1, 'week').format('YYYY-MM-DD'),
-})
+}) as Data[]
 
 const Button = ({
   active,
@@ -32,7 +37,7 @@ const App = () => {
 
   const ref = useRef<GanttRef>()
 
-  const sightList: Gantt.Sight[] = ['day', 'halfYear', 'month', 'quarter', 'week']
+  const sightList: Gantt.Sight[] = ['day', 'threeDay', 'halfYear', 'month', 'quarter', 'week']
 
   const onBackToday = () => {
     if (ref && ref.current) ref.current.backToday()
@@ -42,8 +47,9 @@ const App = () => {
     <div style={{ width: '100%', height: 600 }}>
       <div style={{ width: '100%', height: 500 }}>
         <RcGantt
+          lang='en-US'
           data={data}
-          innerRef={ref}
+          innerRef={ref as any}
           columns={[
             {
               name: 'name',

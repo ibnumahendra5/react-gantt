@@ -28,6 +28,7 @@ const App = () => {
   return (
     <div style={{ width: '100%', height: 500 }}>
       <RcGantt<Data>
+        lang='en-US'
         data={data}
         columns={[
           {
@@ -38,16 +39,6 @@ const App = () => {
         ]}
         onUpdate={async (row, startDate, endDate) => {
           console.log('update', row, startDate, endDate)
-          setData(prev => {
-            const newList = [...prev]
-            const index = newList.findIndex(val => val.id === row.id)
-            newList[index] = {
-              ...row,
-              startDate: dayjs(startDate).format('YYYY-MM-DD'),
-              endDate: dayjs(endDate).format('YYYY-MM-DD'),
-            }
-            return newList
-          })
           return true
         }}
       />
