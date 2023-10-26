@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
-import RcGantt, { enUS } from 'rc-gantt'
-import React, { useState } from 'react'
+import RcGantt, { enUS, GanttRef } from 'rc-gantt'
+import React, { useRef, useState } from 'react'
 
 interface Data {
   id: number
@@ -14,7 +14,7 @@ function createData(len: number) {
   for (let i = 0; i < len; i++) {
     result.push({
       id: i,
-      name: 'Title' + i,
+      name: 'Titleeee' + i,
       startDate: dayjs().subtract(-i, 'day').format('YYYY-MM-DD'),
       endDate: dayjs().add(i, 'day').format('YYYY-MM-DD'),
     })
@@ -22,18 +22,44 @@ function createData(len: number) {
   return result
 }
 
+const Button = ({
+  active,
+  children,
+  onClick,
+  ...resetProps
+}: {
+  active: boolean
+  children: React.ReactNode
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+}) => (
+  <button onClick={onClick} style={active ? { background: '#096dd9', color: '#fff' } : {}} {...resetProps}>
+    {children}
+  </button>
+)
+
 const App = () => {
   const [data, setData] = useState(createData(20))
-  console.log('data', data)
+
+  const ref = useRef<GanttRef>()
+
+  const onBackToday = () => {
+    if (ref && ref.current) ref.current.backToday()
+  }
+
   return (
     <div style={{ width: '100%', height: 500 }}>
+      <Button active onClick={onBackToday}>
+        返回今日
+      </Button>
       <RcGantt<Data>
         data={data}
+        showUnitSwitch={false}
+        innerRef={ref as any}
         columns={[
           {
             name: 'name',
             label: 'Custom Title',
-            width: 100,
+            width: 200,
           },
         ]}
         locale={enUS}

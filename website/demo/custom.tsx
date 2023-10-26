@@ -47,7 +47,7 @@ const App = () => {
     <div style={{ width: '100%', height: 600 }}>
       <div style={{ width: '100%', height: 500 }}>
         <RcGantt
-          lang='en-US'
+          locale='en-US'
           data={data}
           innerRef={ref as any}
           columns={[

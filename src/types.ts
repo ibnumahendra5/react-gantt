@@ -18,11 +18,13 @@ export namespace Gantt {
     width: number
     left: number
     label: string
+    ext:string
     isWeek: boolean
     key: string
   }
   export interface MinorAmp {
     label: string
+    ext: string;
     startDate: Dayjs
     endDate: Dayjs
   }
@@ -31,7 +33,7 @@ export namespace Gantt {
 
   export enum ESightValues {
     day = 2880,
-    threeDay = 8640,
+    threeDay = 2880,
     week = 3600,
     month = 14400,
     quarter = 86400,

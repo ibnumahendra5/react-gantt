@@ -1,6 +1,7 @@
 import { useSize } from 'ahooks'
 import { Dayjs } from 'dayjs'
 import React, { useContext, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import Aside from './components/aside'
 import Chart from './components/chart'
 import Divider from './components/divider'
 import ScrollBar from './components/scroll-bar'
@@ -175,6 +176,8 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
 
   useImperativeHandle(innerRef, () => ({
     backToday: () => store.scrollToToday(),
+    nextDay: (date: string) => store.scrollGoToDay(date),
+    prevDay: (date: string) => store.scrollGoToDay(date),
     getWidthByDate: store.getWidthByDate,
   }))
 
@@ -225,10 +228,18 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
     ]
   )
 
+  // get type
+
   return (
     <Context.Provider value={ContextValue}>
       <Body>
-        <header>
+        <Aside />
+        <header
+          style={{
+            height: unit === 'day' ? 85 : 56,
+            overflow: unit === 'day' ? 'visible' : 'hidden',
+          }}
+        >
           {!hideTable && <TableHeader />}
           <TimeAxis />
         </header>

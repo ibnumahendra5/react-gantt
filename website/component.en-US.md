@@ -16,7 +16,7 @@ use `data` `columns` `onUpdate` config, Show a basic Gantt chart
 
 <code src="./demo/basic.en-US.tsx"></code>
 
-### Add Task Bar
+<!-- ### Add Task Bar
 
 click to create task`bar`
 
@@ -50,13 +50,13 @@ where if each column is configured with the `width` property. The total width is
 
 Default current date filtering support Day, Week, Month, Quarter, Year. Support incoming configuration to customize the filtering dimension
 
-<code src="./demo/filterUnit.tsx"></code>
+<code src="./demo/filterUnit.tsx"></code> -->
 
-### Advanced Usage
+<!-- ### Advanced Usage
 
 Introducing the use of the built-in methods on `alwaysShowTaskBar`, `unit` and `innerRef`.
 
-<code src="./demo/custom.tsx"></code>
+<code src="./demo/custom.tsx"></code> -->
 
 ## Type Definition
 

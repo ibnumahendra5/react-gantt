@@ -12,9 +12,9 @@ export const enUS: GanttLocale = Object.freeze({
     firstHalf: "First half",
     secondHalf: "Second half",
     majorFormat: {
-      day: "YYYY, MMMM",
-      threeDay: "YYYY, MMMM",
-      week: "YYYY, MMMM",
+      day: "MMMM YYYY",
+      threeDay: "MMMM YYYY",
+      week: "MMMM YYYY",
       month: "YYYY",
       quarter: "YYYY",
       halfYear: "YYYY",

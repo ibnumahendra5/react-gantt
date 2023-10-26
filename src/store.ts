@@ -165,6 +165,11 @@ class GanttStore {
     return dayjs().subtract(10, 'day').toString()
   }
 
+  getLastDate() {
+    return dayjs().add(27, 'day').toString()
+  }
+  
+
   setIsRestDay(function_: (date: string) => boolean) {
     this.isRestDay = function_ || isRestDay
   }
@@ -271,7 +276,12 @@ class GanttStore {
     this.setTranslateX(translateX)
   }
 
-  getTranslateXByDate(date: string) {
+  @action scrollGoToDay(date:string) {    
+    const translateX = this.getTranslateXByDate(date)
+    this.setTranslateX(translateX)
+  }
+
+  getTranslateXByDate(date: string) {    
     return dayjs(date).startOf('day').valueOf() / this.pxUnitAmp
   }
 
@@ -389,7 +399,7 @@ class GanttStore {
 
     // 对可视区域内的时间进行迭代
     while (currentDate.isBetween(translateAmp - 1, endAmp + 1)) {
-      const majorKey = currentDate.format(format)
+      const majorKey = currentDate.format(format)      
 
       let start = currentDate
       const end = getEnd(start)
@@ -442,8 +452,11 @@ class GanttStore {
     const endAmp = startAmp + this.getDurationAmp()
     const format = minorFormatMap[this.sightConfig.type]
 
+    
+
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const getNextDate = (start: Dayjs) => {
+      
       const map = {
         day() {
           return start.add(1, 'day')
@@ -464,10 +477,11 @@ class GanttStore {
           return start.add(6, 'month')
         },
       }
-
+      
       return map[this.sightConfig.type]()
     }
     const setStart = (date: Dayjs) => {
+      
       const map = {
         day() {
           return date.startOf('day')
@@ -489,7 +503,7 @@ class GanttStore {
 
           return date.month(6).startOf('month')
         },
-      }
+      }      
 
       return map[this.sightConfig.type]()
     }
@@ -520,15 +534,32 @@ class GanttStore {
       return map[this.sightConfig.type]()
     }
     const getMinorKey = (date: Dayjs) => {
-      if (this.sightConfig.type === 'halfYear')
+      if (this.sightConfig.type === 'halfYear') {
         return (
           date.format(format) +
           (fstHalfYear.has(date.month())
             ? this.locale.firstHalf
             : this.locale.secondHalf)
         )
+      }
+      
+        // if three days return start date - end date
+        if (this.sightConfig.type === 'threeDay') {
+          const start = date.startOf('day')
+          const end = date.add(2, 'day').endOf('day')
+          return `${start.format(format)} - ${end.format(format)}`
+        }
+
 
       return date.format(format)
+    }
+
+    const getExtKey = (date: Dayjs) => {
+      // get sun, mon, tue, wed, thu, fri, sat
+        if (this.sightConfig.type === 'day') {
+            return date.format('ddd');
+          }
+      return "";
     }
 
     // 初始化当前时间
@@ -536,10 +567,14 @@ class GanttStore {
     const dates: Gantt.MinorAmp[] = []
     while (currentDate.isBetween(startAmp - 1, endAmp + 1)) {
       const minorKey = getMinorKey(currentDate)
+      const extKey = getExtKey(currentDate)
       const start = setStart(currentDate)
       const end = setEnd(start)
+      
       dates.push({
-        label: minorKey.split('-').pop() as string,
+        // label: minorKey.split('-').pop() as string,
+        label: minorKey,
+        ext: extKey,
         startDate: start,
         endDate: end,
       })
@@ -564,6 +599,20 @@ class GanttStore {
         width,
       }
     }
+    const threeDayRect = () => {
+      const stAmp = date.startOf('day')
+      const endAmp = date.add(2, 'day').endOf('day')
+      // @ts-ignore
+      const left = stAmp / this.pxUnitAmp
+      // @ts-ignore
+      const width = (endAmp - stAmp) / this.pxUnitAmp
+
+      return {
+        left,
+        width,
+      }
+    }
+
     const weekRect = () => {
       if (date.weekday() === 0) date = date.add(-1, 'week')
 
@@ -589,7 +638,7 @@ class GanttStore {
 
     const map = {
       day: dayRect,
-      threeDay: dayRect,
+      threeDay: threeDayRect,
       week: weekRect,
       month: weekRect,
       quarter: monthRect,
@@ -604,16 +653,18 @@ class GanttStore {
     return ampList.map(item => {
       const { startDate } = item
       const { endDate } = item
+      
 
-      const { label } = item
+      const { label, ext } = item
       const left = startDate.valueOf() / pxUnitAmp
       const width = (endDate.valueOf() - startDate.valueOf()) / pxUnitAmp
-
+      
       let isWeek = false
       if (this.sightConfig.type === 'day') isWeek = this.isRestDay(startDate.toString())
 
       return {
         label,
+        ext,
         left,
         width,
         isWeek,
