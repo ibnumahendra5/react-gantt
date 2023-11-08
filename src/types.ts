@@ -87,6 +87,7 @@ export namespace Gantt {
     collapsed?: boolean
     children?: Record<RecordType>[]
     disabled?: boolean
+    highlight?: boolean
   }
 
   export type ColumnAlign = 'center' | 'right' | 'left'
@@ -96,6 +97,7 @@ export namespace Gantt {
     maxWidth?: number
     flex?: number
     name: string
+    highlight?: boolean
     label: string
     style?: Object
     render?: (item: Record<RecordType>) => React.ReactNode

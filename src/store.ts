@@ -67,11 +67,13 @@ class GanttStore {
   constructor({
     rowHeight,
     disabled = false,
+    highlight = false,
     customSights,
     locale,
   }: {
     rowHeight: number
     disabled: boolean
+    highlight: boolean
     customSights: Gantt.SightConfig[]
     locale: GanttLocale
   }) {
@@ -90,6 +92,7 @@ class GanttStore {
     this.bodyWidth = bodyWidth
     this.rowHeight = rowHeight
     this.disabled = disabled
+    this.highlight = highlight
     this.locale = locale
   }
 
@@ -136,6 +139,8 @@ class GanttStore {
   @observable draggingType: Gantt.MoveType | null = null
 
   @observable disabled = false
+
+  @observable highlight = false
 
   viewTypeList = getViewTypeList(this.locale)
 
@@ -376,19 +381,19 @@ class GanttStore {
     const format = majorFormatMap[type]
 
     const getNextDate = (start: Dayjs) => {
-      if (type === 'day' || type === 'week') return start.add(1, 'month')
+      if (type === 'day' || type=== 'threeDay' || type === 'week') return start.add(1, 'month')
 
       return start.add(1, 'year')
     }
 
     const getStart = (date: Dayjs) => {
-      if (type === 'day' || type === 'week') return date.startOf('month')
+      if (type === 'day' || type=== 'threeDay' || type === 'week') return date.startOf('month')
 
       return date.startOf('year')
     }
 
     const getEnd = (date: Dayjs) => {
-      if (type === 'day' || type === 'week') return date.endOf('month')
+      if (type === 'day' || type=== 'threeDay' || type === 'week') return date.endOf('month')
 
       return date.endOf('year')
     }
@@ -736,7 +741,7 @@ class GanttStore {
       const translateX = valid ? startAmp / pxUnitAmp : 0
       const translateY = baseTop + index * topStep
       const { _parent } = item
-      const record = { ...item.record, disabled: this.disabled }
+      const record = { ...item.record, disabled: this.disabled, highlight: this.highlight }
       const bar: Gantt.Bar = {
         key: item.key,
         task: item,
@@ -943,6 +948,46 @@ class GanttStore {
     const target = dayjs(key).format('YYYY-MM-DD')
     return target === now
   }
+
+  @action hightLightById(id: number) {
+  // Loop through the bar list and update the highlight status
+    this.getBarList.forEach(item => {
+      if (item.task.record.id === id) {
+        const translateX = item.translateX - this.viewWidth / 2;
+        this.setTranslateX(translateX);
+        item.record.highlight = true;
+
+        // hovered
+        this.showSelectionIndicator = true;
+        const topValue = Math.floor((item.translateY - TOP_PADDING) / this.rowHeight) * this.rowHeight + TOP_PADDING;
+        this.selectionIndicatorTop = topValue;
+
+      } else {
+        // when the id is not matched, disable the highlight
+        item.record.highlight = false;
+      }
+    });
+  }
+
+
+  @action onlyAssigneeMe(id:number ) {
+    this.getBarList.forEach(item => {
+      if (item.task.record.id === id) {
+        item.record.disabled = false;
+      } else {
+        item.record.disabled = true;
+      }
+    });
+  }
+
+  @action disableHighlight() {
+    this.getBarList.forEach(item => {
+      item.record.highlight = false;
+    });
+
+    this.showSelectionIndicator = false;
+
+  } 
 }
 
 export default GanttStore

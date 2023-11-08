@@ -13,10 +13,10 @@ function createData(len: number) {
   const result: Data[] = []
   for (let i = 0; i < len; i++) {
     result.push({
-      id: i,
+      id: i++,
       name: 'Titleeee' + i,
-      startDate: dayjs().subtract(-i, 'day').format('YYYY-MM-DD'),
-      endDate: dayjs().add(i, 'day').format('YYYY-MM-DD'),
+      startDate: dayjs().subtract(-i, 'month').format('YYYY-MM-DD'),
+      endDate: dayjs().add(i, 'month').format('YYYY-MM-DD'),
     })
   }
   return result
@@ -38,7 +38,7 @@ const Button = ({
 )
 
 const App = () => {
-  const [data, setData] = useState(createData(20))
+  const [data, setData] = useState(createData(5))
 
   const ref = useRef<GanttRef>()
 
@@ -46,10 +46,34 @@ const App = () => {
     if (ref && ref.current) ref.current.backToday()
   }
 
+  const hightLightById = (id: number) => {
+    if (ref && ref.current) ref.current.hightLightById(id)
+  }
+
+  const disableHighlight = () => {
+    if (ref && ref.current) ref.current.disableHighlight()
+  }
+
+  const onlyAssigneeMe = () => {
+    if (ref && ref.current) ref.current.onlyAssigneeMe(21)
+  }
+
   return (
     <div style={{ width: '100%', height: 500 }}>
-      <Button active onClick={onBackToday}>
-        返回今日
+      <Button active onClick={() => hightLightById(0)}>
+        Highlight By Id 0
+      </Button>
+      <Button active onClick={() => hightLightById(2)}>
+        Highlight By Id 2
+      </Button>
+      <Button active onClick={() => hightLightById(4)}>
+        Highlight By Id 4
+      </Button>
+      <Button active onClick={disableHighlight}>
+        Disable Highlight
+      </Button>
+      <Button active onClick={onlyAssigneeMe}>
+        Only Assignee Me
       </Button>
       <RcGantt<Data>
         data={data}

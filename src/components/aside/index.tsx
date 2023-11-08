@@ -28,26 +28,33 @@ const TableHeader: React.FC = () => {
 
   const handleScrollBackDay = useCallback(() => {
     const date = dayjs(minorList[0].key).format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+
     const dateMinOne = dayjs(date).subtract(1, 'day').format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    const dateMinWeek = dayjs(date).subtract(7, 'day').format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+
+    if (hasActive === 'week') {
+      store.scrollGoToDay(dateMinWeek)
+      return
+    }
 
     store.scrollGoToDay(dateMinOne)
   }, [store, minorList])
 
   return (
-    <aside className='gant-aside'>
-      <div>
+    <aside className='gant-aside row'>
+      <div className='col-md-6'>
         <button className='btn-range' onClick={handleScrollBackDay}>
           &lt;
+        </button>
+        <button className='btn-range' onClick={handleScrollNextDay}>
+          &gt;
         </button>
         <span className='time-range'>
           {dayjs(minorList[0].key).format('DD MMMM YYYY')} -{' '}
           {dayjs(minorList[minorList.length - 1].key).format('DD MMMM YYYY')}
         </span>
-        <button className='btn-range' onClick={handleScrollNextDay}>
-          &gt;
-        </button>
       </div>
-      <div>
+      <div className='col-md-6'>
         <div className='btn-group'>
           {viewTypeList.map(item => (
             <button
