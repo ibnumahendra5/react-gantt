@@ -19,7 +19,7 @@
     "release": "bumpp package.json --commit --push --tag --no-verify",
     "start": "cross-env NODE_ENV=development avenger build --watch",
     "start:website": "dumi dev",
-    "publish": "npm run build && npm publish",
+    "publish": "npm run build && npm publish"
   },
   "husky": {
     "hooks": {
