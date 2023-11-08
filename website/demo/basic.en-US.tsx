@@ -1,6 +1,5 @@
-import dayjs from 'dayjs'
 import RcGantt, { enUS, GanttRef } from 'rc-gantt'
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 
 interface Data {
   id: number
@@ -9,18 +8,18 @@ interface Data {
   endDate: string
 }
 
-function createData(len: number) {
-  const result: Data[] = []
-  for (let i = 0; i < len; i++) {
-    result.push({
-      id: i++,
-      name: 'Titleeee' + i,
-      startDate: dayjs().subtract(-i, 'month').format('YYYY-MM-DD'),
-      endDate: dayjs().add(i, 'month').format('YYYY-MM-DD'),
-    })
-  }
-  return result
-}
+// function createData(len: number) {
+//   const result: Data[] = []
+//   for (let i = 0; i < len; i++) {
+//     result.push({
+//       id: i++,
+//       name: 'Titleeee' + i,
+//       startDate: dayjs().subtract(-i, 'month').format('YYYY-MM-DD'),
+//       endDate: dayjs().add(i, 'month').format('YYYY-MM-DD'),
+//     })
+//   }
+//   return result
+// }
 
 const Button = ({
   active,
@@ -38,7 +37,86 @@ const Button = ({
 )
 
 const App = () => {
-  const [data, setData] = useState(createData(5))
+  // const [data, setData] = useState(createData(5))
+
+  const data = new Array(2).fill({
+    id: '1',
+    name: 'Drainage',
+    startDate: '2023-10-10',
+    endDate: '2023-10-20',
+    collapsed: false,
+    disabled: true,
+    backgroundColor: '#5648FB',
+    borderColor: '#5648FB',
+    totalDays: 10,
+    assignee: [
+      {
+        id: '1',
+        name: 'John Doe',
+        avatar: 'https://picsum.photos/seed/picsum/200/300',
+      },
+      {
+        id: '2',
+        name: 'Pelir Kuda',
+        avatar: 'https://picsum.photos/seed/picsum/200/300',
+      },
+    ],
+    children: [
+      {
+        id: '11',
+        startDate: '2023-10-10',
+        endDate: '2023-10-15',
+        name: 'Lay Drainage Pipes',
+        collapsed: false,
+        content: '123123123',
+        backgroundColor: '#5648FB',
+        borderColor: '#5648FB',
+        totalDays: 5,
+        assignee: [
+          {
+            name: 'John Doe',
+            avatar: 'https://picsum.photos/seed/picsum/200/300',
+          },
+        ],
+      },
+      {
+        id: '12',
+        startDate: '2023-10-15',
+        endDate: '2023-10-20',
+        name: 'Roofer',
+        collapsed: false,
+        content: '123123123',
+        backgroundColor: '#5648FB',
+        borderColor: '#5648FB',
+        totalDays: 5,
+        assignee: [
+          {
+            name: 'John Doe',
+            avatar: 'https://picsum.photos/seed/picsum/200/300',
+          },
+        ],
+        children: [
+          {
+            id: '121',
+            startDate: '2023-10-15',
+            endDate: '2023-10-20',
+            name: 'Lay Drainage Pipes',
+            collapsed: false,
+            content: '123123123',
+            backgroundColor: '#5648FB',
+            borderColor: '#5648FB',
+            totalDays: 5,
+            assignee: [
+              {
+                name: 'John Doe',
+                avatar: 'https://picsum.photos/seed/picsum/200/300',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  })
 
   const ref = useRef<GanttRef>()
 
@@ -89,16 +167,16 @@ const App = () => {
         locale={enUS}
         onUpdate={async (row, startDate, endDate) => {
           console.log('update', row, startDate, endDate)
-          setData(prev => {
-            const newList = [...prev]
-            const index = newList.findIndex(val => val.id === row.id)
-            newList[index] = {
-              ...row,
-              startDate: dayjs(startDate).format('YYYY-MM-DD'),
-              endDate: dayjs(endDate).format('YYYY-MM-DD'),
-            }
-            return newList
-          })
+          // setData(prev => {
+          //   const newList = [...prev]
+          //   const index = newList.findIndex(val => val.id === row.id)
+          //   newList[index] = {
+          //     ...row,
+          //     startDate: dayjs(startDate).format('YYYY-MM-DD'),
+          //     endDate: dayjs(endDate).format('YYYY-MM-DD'),
+          //   }
+          //   return newList
+          // })
           return true
         }}
       />

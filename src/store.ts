@@ -969,8 +969,17 @@ class GanttStore {
     });
   }
 
+  @action disableHighlight() {
+    this.getBarList.forEach(item => {
+      item.record.highlight = false;
+    });
 
+    this.showSelectionIndicator = false;
+  } 
+
+  
   @action onlyAssigneeMe(id:number ) {
+    
     this.getBarList.forEach(item => {
       if (item.task.record.id === id) {
         item.record.disabled = false;
@@ -980,14 +989,6 @@ class GanttStore {
     });
   }
 
-  @action disableHighlight() {
-    this.getBarList.forEach(item => {
-      item.record.highlight = false;
-    });
-
-    this.showSelectionIndicator = false;
-
-  } 
 }
 
 export default GanttStore

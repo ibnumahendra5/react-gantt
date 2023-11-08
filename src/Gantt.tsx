@@ -80,6 +80,7 @@ export interface GanttRef {
   hightLightById: (id: number) => void
   disableHighlight: () => void
   getWidthByDate: (startDate: Dayjs, endDate: Dayjs) => number
+  onlyAssigneeMe: (id: number) => void
 }
 
 export interface GanttLocale {
@@ -182,9 +183,10 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
     backToday: () => store.scrollToToday(),
     nextDay: (date: string) => store.scrollGoToDay(date),
     prevDay: (date: string) => store.scrollGoToDay(date),
+    getWidthByDate: store.getWidthByDate,
     hightLightById: (id: number) => store.hightLightById(id),
     disableHighlight: () => store.disableHighlight(),
-    getWidthByDate: store.getWidthByDate,
+    onlyAssigneeMe: (id: number) => store.onlyAssigneeMe(id),
   }))
 
   const ContextValue = React.useMemo(
