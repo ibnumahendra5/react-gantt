@@ -1,6 +1,6 @@
-import React from 'react'
-import RcGantt from 'rc-gantt'
 import dayjs from 'dayjs'
+import RcGantt from 'ibnu-rc-gantt'
+import React from 'react'
 
 const data = Array.from({ length: 100 }).fill({
   name: '一个名称一个名称一个名称一个名称',

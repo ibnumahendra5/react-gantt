@@ -21,7 +21,7 @@ $ yarn add rc-gantt  # or npm i rc-gantt -S
 ## 🔨 Demo
 
 ```tsx
-import RcGantt, { enUS } from 'rc-gantt'
+import RcGantt, { enUS } from 'ibnu-rc-gantt'
 
 // in react page
 return (
@@ -44,4 +44,4 @@ return (
 
 ## Feedback
 
-Please visit [Github](https://github.com/ahwgs/react-gantt/issues) 
+Please visit [Github](https://github.com/ahwgs/react-gantt/issues)

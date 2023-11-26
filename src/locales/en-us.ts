@@ -14,7 +14,7 @@ export const enUS: GanttLocale = Object.freeze({
     majorFormat: {
       day: "MMMM YYYY",
       threeDay: "MMMM YYYY",
-      week: "MMMM YYYY",
+      week: "YYYY",
       month: "YYYY",
       quarter: "YYYY",
       halfYear: "YYYY",

@@ -381,19 +381,19 @@ class GanttStore {
     const format = majorFormatMap[type]
 
     const getNextDate = (start: Dayjs) => {
-      if (type === 'day' || type=== 'threeDay' || type === 'week') return start.add(1, 'month')
+      if (type === 'day' || type=== 'threeDay' ) return start.add(1, 'month')
 
       return start.add(1, 'year')
     }
 
     const getStart = (date: Dayjs) => {
-      if (type === 'day' || type=== 'threeDay' || type === 'week') return date.startOf('month')
+      if (type === 'day' || type=== 'threeDay' ) return date.startOf('month')
 
       return date.startOf('year')
     }
 
     const getEnd = (date: Dayjs) => {
-      if (type === 'day' || type=== 'threeDay' || type === 'week') return date.endOf('month')
+      if (type === 'day' || type=== 'threeDay' ) return date.endOf('month')
 
       return date.endOf('year')
     }
@@ -457,7 +457,6 @@ class GanttStore {
     const endAmp = startAmp + this.getDurationAmp()
     const format = minorFormatMap[this.sightConfig.type]
 
-    
 
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const getNextDate = (start: Dayjs) => {
@@ -518,7 +517,7 @@ class GanttStore {
           return start.endOf('day')
         },
         threeDay() {
-          return start.add(2, 'day').endOf('day')
+          return start.add(2, 'day')
         },
         week() {
           return start.weekday(7).hour(23).minute(59).second(59)
@@ -551,10 +550,23 @@ class GanttStore {
         // if three days return start date - end date
         if (this.sightConfig.type === 'threeDay') {
           const start = date.startOf('day')
-          const end = date.add(2, 'day').endOf('day')
+          const end = date.add(2, 'day')
           return `${start.format(format)} - ${end.format(format)}`
         }
 
+        // if week return range of date
+        if (this.sightConfig.type === 'week') {
+          const start = date.weekday(1).hour(0).minute(0).second(0)
+          const end = date.weekday(7).hour(23).minute(59).second(59)
+          return `${start.format('DD MMM')} - ${end.format('DD MMM')}`
+        }
+
+        // if quarter return range of date
+        if (this.sightConfig.type === 'quarter') {
+          const start = date.startOf('quarter')
+          const end = date.endOf('quarter')
+          return `${start.format('DD MMM')} - ${end.format('DD MMM')}`
+        }
 
       return date.format(format)
     }
@@ -606,7 +618,7 @@ class GanttStore {
     }
     const threeDayRect = () => {
       const stAmp = date.startOf('day')
-      const endAmp = date.add(2, 'day').endOf('day')
+      const endAmp = date.add(2, 'day')
       // @ts-ignore
       const left = stAmp / this.pxUnitAmp
       // @ts-ignore
@@ -617,7 +629,6 @@ class GanttStore {
         width,
       }
     }
-
     const weekRect = () => {
       if (date.weekday() === 0) date = date.add(-1, 'week')
 

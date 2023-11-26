@@ -36,7 +36,7 @@ export namespace Gantt {
     threeDay = 2880,
     week = 3600,
     month = 14400,
-    quarter = 86400,
+    quarter = 56400,
     halfYear = 115200,
   }
 

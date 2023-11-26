@@ -46,13 +46,13 @@ const TableHeader: React.FC = () => {
         <button className='btn-range' onClick={handleScrollBackDay}>
           &lt;
         </button>
-        <button className='btn-range' onClick={handleScrollNextDay}>
-          &gt;
-        </button>
         <span className='time-range'>
           {dayjs(minorList[0].key).format('DD MMMM YYYY')} -{' '}
           {dayjs(minorList[minorList.length - 1].key).format('DD MMMM YYYY')}
         </span>
+        <button className='btn-range' onClick={handleScrollNextDay}>
+          &gt;
+        </button>
       </div>
       <div className='col-md-6'>
         <div className='btn-group'>

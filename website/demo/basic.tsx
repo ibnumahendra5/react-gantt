@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import RcGantt from 'rc-gantt'
+import RcGantt from 'ibnu-rc-gantt'
 import React, { useState } from 'react'
 
 interface Data {

@@ -1,5 +1,5 @@
-import RcGantt, { enUS, GanttRef } from 'rc-gantt'
-import React, { useRef } from 'react'
+import RcGantt,{ enUS,GanttRef } from 'ibnu-rc-gantt'
+import React,{ useRef,useState } from 'react'
 
 interface Data {
   id: number
@@ -136,6 +136,10 @@ const App = () => {
     if (ref && ref.current) ref.current.onlyAssigneeMe(21)
   }
 
+  const [modal, setModal] = useState({
+    add:false,
+  })
+
   return (
     <div style={{ width: '100%', height: 500 }}>
       <Button active onClick={() => hightLightById(0)}>
@@ -153,6 +157,9 @@ const App = () => {
       <Button active onClick={onlyAssigneeMe}>
         Only Assignee Me
       </Button>
+      <Button active onClick={() => setModal({ ...modal, add: true })}>
+        Open Modal Create
+      </Button>
       <RcGantt<Data>
         data={data}
         showUnitSwitch={false}
@@ -165,6 +172,24 @@ const App = () => {
           },
         ]}
         locale={enUS}
+        renderBar={(barInfo, { width, height }) => (
+          <div
+              style={{
+                  width: `${width}px`,
+                  height: '20px',
+                  backgroundColor: barInfo?.record?.backgroundColor,
+                  border: `1px solid ${
+                      barInfo?.record?.backgroundColor ?? '#fff'
+                  }`,
+                  borderRadius: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+              }}
+          >
+           
+          </div>
+      )}
         onUpdate={async (row, startDate, endDate) => {
           console.log('update', row, startDate, endDate)
           // setData(prev => {
@@ -178,6 +203,24 @@ const App = () => {
           //   return newList
           // })
           return true
+        }}
+        // addModal={modal.add}
+        // setAddModal={setModal}
+        // addModalView={
+        //   <div>
+        //     <div>asd</div>
+        //   </div>
+        // }
+        modalAdd= {{
+          title: "Add Modal",
+          size: "lg",
+          state: modal.add,
+          setState: setModal,
+          view: (
+            <div>
+              <div>asd</div>
+            </div>
+          )
         }}
       />
     </div>

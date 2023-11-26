@@ -1,5 +1,5 @@
+import RcGantt from 'ibnu-rc-gantt'
 import React from 'react'
-import RcGantt from 'rc-gantt'
 
 interface Data {
   name: string

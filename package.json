@@ -1,6 +1,6 @@
 {
   "name": "ibnu-rc-gantt",
-  "version": "0.2.6",
+  "version": "0.3.2",
   "homepage": "https://github.com/ibnumahendra5/react-gantt/#/",
   "repository": {
     "type": "git",
@@ -18,8 +18,7 @@
     "build:website": "dumi build",
     "release": "bumpp package.json --commit --push --tag --no-verify",
     "start": "cross-env NODE_ENV=development avenger build --watch",
-    "start:website": "dumi dev",
-    "publish": "npm run build && npm publish"
+    "start:website": "dumi dev"
   },
   "husky": {
     "hooks": {

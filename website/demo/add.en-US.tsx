@@ -1,4 +1,4 @@
-import RcGantt, { enUS } from 'rc-gantt'
+import RcGantt, { enUS } from 'ibnu-rc-gantt'
 import React from 'react'
 
 interface Data {

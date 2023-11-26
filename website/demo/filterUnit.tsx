@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import RcGantt, { Gantt } from 'rc-gantt'
+import RcGantt, { Gantt } from 'ibnu-rc-gantt'
 import React from 'react'
 
 interface Data {

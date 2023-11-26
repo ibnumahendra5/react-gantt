@@ -21,7 +21,7 @@ $ yarn add rc-gantt  # or npm i rc-gantt -S
 ## 🔨 快速开始
 
 ```tsx
-import RcGantt from 'rc-gantt'
+import RcGantt from 'ibnu-rc-gantt'
 
 // in react page
 return (
