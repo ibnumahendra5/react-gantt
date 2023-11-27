@@ -134,6 +134,10 @@ class GanttStore {
 
   @observable selectionIndicatorTop = 0
 
+  @observable showHighlightIndicator = false
+
+  @observable highlightIndicatorTop = 0
+
   @observable dragging: Gantt.Bar | null = null
 
   @observable draggingType: Gantt.MoveType | null = null
@@ -969,13 +973,24 @@ class GanttStore {
         item.record.highlight = true;
 
         // hovered
-        this.showSelectionIndicator = true;
+        this.showHighlightIndicator = true;
         const topValue = Math.floor((item.translateY - TOP_PADDING) / this.rowHeight) * this.rowHeight + TOP_PADDING;
-        this.selectionIndicatorTop = topValue;
+        this.highlightIndicatorTop = topValue;
 
       } else {
         // when the id is not matched, disable the highlight
         item.record.highlight = false;
+      }
+
+
+      // disable the highlight after 5 seconds
+      if (this.showHighlightIndicator) {
+          setTimeout(() => {
+            this.showHighlightIndicator = false
+            this.getBarList.forEach(item => {
+              item.record.highlight = false;
+            });
+          }, 3000);
       }
     });
   }
@@ -984,8 +999,7 @@ class GanttStore {
     this.getBarList.forEach(item => {
       item.record.highlight = false;
     });
-
-    this.showSelectionIndicator = false;
+    this.showHighlightIndicator = false;
   } 
 
   

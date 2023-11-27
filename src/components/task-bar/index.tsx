@@ -42,14 +42,34 @@ const TaskBar: React.FC<TaskBarProps> = ({ data }) => {
 
   const prefixClsTaskBar = `${prefixCls}-task-bar`
 
-  const { selectionIndicatorTop, showSelectionIndicator, rowHeight, locale } = store
+  const {
+    selectionIndicatorTop,
+    showSelectionIndicator,
+    highlightIndicatorTop,
+    showHighlightIndicator,
+    rowHeight,
+    locale,
+  } = store
 
   const showDragBar = useMemo(() => {
     if (!showSelectionIndicator) return false
+    if (!showHighlightIndicator) return false
+
     // 差值
     const baseTop = TOP_PADDING + rowHeight / 2 - barHeight / 2
+
+    highlightIndicatorTop === translateY - baseTop
+
     return selectionIndicatorTop === translateY - baseTop
-  }, [showSelectionIndicator, selectionIndicatorTop, translateY, rowHeight, barHeight])
+  }, [
+    showSelectionIndicator,
+    selectionIndicatorTop,
+    showHighlightIndicator,
+    highlightIndicatorTop,
+    translateY,
+    rowHeight,
+    barHeight,
+  ])
 
   const themeColor = useMemo(() => {
     if (translateX + width >= dayjs().valueOf() / store.pxUnitAmp) return ['#95DDFF', '#64C7FE']
@@ -108,10 +128,10 @@ const TaskBar: React.FC<TaskBarProps> = ({ data }) => {
   // 根据不同的视图确定拖动时的单位，在任何视图下都以一天为单位
   const grid = useMemo(() => ONE_DAY_MS / store.pxUnitAmp, [store.pxUnitAmp])
 
-  const moveCalc = -(width / store.pxUnitAmp);
+  const moveCalc = -(width / store.pxUnitAmp)
 
   const days = useMemo(() => {
-    const daysWidth = Number(getDateWidth(translateX + width + moveCalc, translateX));
+    const daysWidth = Number(getDateWidth(translateX + width + moveCalc, translateX))
 
     return `${daysWidth} ${daysWidth > 1 ? locale.days : locale.day}`
   }, [translateX, width, moveCalc, translateX])

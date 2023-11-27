@@ -1,0 +1,17 @@
+@import '../../style/themes/index';
+@highlight-indicator-prefix-cls: ~'@{gantt-prefix}-highlight-indicator';
+
+.@{highlight-indicator-prefix-cls} {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  z-index: 10;
+  border: 1px solid #5648fb;  
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}

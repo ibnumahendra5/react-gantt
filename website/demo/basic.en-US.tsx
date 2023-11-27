@@ -1,5 +1,5 @@
-import RcGantt,{ enUS,GanttRef } from 'ibnu-rc-gantt'
-import React,{ useRef,useState } from 'react'
+import RcGantt, { enUS, GanttRef } from 'ibnu-rc-gantt'
+import React, { useRef } from 'react'
 
 interface Data {
   id: number
@@ -37,10 +37,8 @@ const Button = ({
 )
 
 const App = () => {
-  // const [data, setData] = useState(createData(5))
-
-  const data = new Array(2).fill({
-    id: '1',
+  const data = new Array(5).fill(null).map((_, index) => ({
+    id: index + 1,
     name: 'Drainage',
     startDate: '2023-10-10',
     endDate: '2023-10-20',
@@ -63,7 +61,7 @@ const App = () => {
     ],
     children: [
       {
-        id: '11',
+        id: index + 10,
         startDate: '2023-10-10',
         endDate: '2023-10-15',
         name: 'Lay Drainage Pipes',
@@ -80,7 +78,7 @@ const App = () => {
         ],
       },
       {
-        id: '12',
+        id: index + 20,
         startDate: '2023-10-15',
         endDate: '2023-10-20',
         name: 'Roofer',
@@ -97,7 +95,7 @@ const App = () => {
         ],
         children: [
           {
-            id: '121',
+            id: index + 30,
             startDate: '2023-10-15',
             endDate: '2023-10-20',
             name: 'Lay Drainage Pipes',
@@ -116,7 +114,7 @@ const App = () => {
         ],
       },
     ],
-  })
+  }))
 
   const ref = useRef<GanttRef>()
 
@@ -126,6 +124,7 @@ const App = () => {
 
   const hightLightById = (id: number) => {
     if (ref && ref.current) ref.current.hightLightById(id)
+    console.log(id)
   }
 
   const disableHighlight = () => {
@@ -136,14 +135,10 @@ const App = () => {
     if (ref && ref.current) ref.current.onlyAssigneeMe(21)
   }
 
-  const [modal, setModal] = useState({
-    add:false,
-  })
-
   return (
     <div style={{ width: '100%', height: 500 }}>
-      <Button active onClick={() => hightLightById(0)}>
-        Highlight By Id 0
+      <Button active onClick={() => hightLightById(5)}>
+        Highlight By Id 5
       </Button>
       <Button active onClick={() => hightLightById(2)}>
         Highlight By Id 2
@@ -157,9 +152,6 @@ const App = () => {
       <Button active onClick={onlyAssigneeMe}>
         Only Assignee Me
       </Button>
-      <Button active onClick={() => setModal({ ...modal, add: true })}>
-        Open Modal Create
-      </Button>
       <RcGantt<Data>
         data={data}
         showUnitSwitch={false}
@@ -172,24 +164,23 @@ const App = () => {
           },
         ]}
         locale={enUS}
-        renderBar={(barInfo, { width, height }) => (
-          <div
-              style={{
-                  width: `${width}px`,
-                  height: '20px',
-                  backgroundColor: barInfo?.record?.backgroundColor,
-                  border: `1px solid ${
-                      barInfo?.record?.backgroundColor ?? '#fff'
-                  }`,
-                  borderRadius: '20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-              }}
-          >
-           
-          </div>
-      )}
+        // renderBar={(barInfo, { width, height }) => (
+        //   <div
+        //     style={{
+        //       width: `${width}px`,
+        //       height: '20px',
+        //       backgroundColor: barInfo?.record?.backgroundColor,
+        //       border: `1px solid ${barInfo?.record?.backgroundColor ?? '#fff'}`,
+        //       borderRadius: '20px',
+        //       display: 'flex',
+        //       alignItems: 'center',
+        //       justifyContent: 'center',
+        //     }}
+        //   ></div>
+        // )}
+        onBarClick={() => {
+          console.log('bar click')
+        }}
         onUpdate={async (row, startDate, endDate) => {
           console.log('update', row, startDate, endDate)
           // setData(prev => {
@@ -203,24 +194,6 @@ const App = () => {
           //   return newList
           // })
           return true
-        }}
-        // addModal={modal.add}
-        // setAddModal={setModal}
-        // addModalView={
-        //   <div>
-        //     <div>asd</div>
-        //   </div>
-        // }
-        modalAdd= {{
-          title: "Add Modal",
-          size: "lg",
-          state: modal.add,
-          setState: setModal,
-          view: (
-            <div>
-              <div>asd</div>
-            </div>
-          )
         }}
       />
     </div>

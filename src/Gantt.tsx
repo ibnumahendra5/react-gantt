@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useImperativeHandle, useMemo, useRef } fr
 import Aside from './components/aside'
 import Chart from './components/chart'
 import Divider from './components/divider'
+import HighlightIndicator from './components/highlight-indicator'
 import ScrollBar from './components/scroll-bar'
 import ScrollTop from './components/scroll-top'
 import SelectionIndicator from './components/selection-indicator'
@@ -253,6 +254,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
         </header>
         <main ref={store.mainElementRef} onScroll={store.handleScroll}>
           <SelectionIndicator />
+          <HighlightIndicator />
           {!hideTable && <TableBody />}
           <Chart />
         </main>
