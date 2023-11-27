@@ -45,31 +45,19 @@ const TaskBar: React.FC<TaskBarProps> = ({ data }) => {
   const {
     selectionIndicatorTop,
     showSelectionIndicator,
-    highlightIndicatorTop,
-    showHighlightIndicator,
+
     rowHeight,
     locale,
   } = store
 
   const showDragBar = useMemo(() => {
     if (!showSelectionIndicator) return false
-    if (!showHighlightIndicator) return false
 
     // 差值
     const baseTop = TOP_PADDING + rowHeight / 2 - barHeight / 2
 
-    highlightIndicatorTop === translateY - baseTop
-
     return selectionIndicatorTop === translateY - baseTop
-  }, [
-    showSelectionIndicator,
-    selectionIndicatorTop,
-    showHighlightIndicator,
-    highlightIndicatorTop,
-    translateY,
-    rowHeight,
-    barHeight,
-  ])
+  }, [showSelectionIndicator, selectionIndicatorTop, translateY, rowHeight, barHeight])
 
   const themeColor = useMemo(() => {
     if (translateX + width >= dayjs().valueOf() / store.pxUnitAmp) return ['#95DDFF', '#64C7FE']
