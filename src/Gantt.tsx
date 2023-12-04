@@ -65,6 +65,7 @@ export interface GanttProps<RecordType = DefaultRecordType> {
   renderLeftText?: GanttContext<RecordType>['renderLeftText']
   renderRightText?: GanttContext<RecordType>['renderLeftText']
   onExpand?: GanttContext<RecordType>['onExpand']
+  renderHeader?: GanttContext<RecordType>['renderHeader']
   /**
    * 自定义日期筛选维度
    */
@@ -145,6 +146,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
     alwaysShowTaskBar = true,
     renderLeftText,
     renderRightText,
+    renderHeader,
     onExpand,
     customSights = [],
     locale = { ...defaultLocale },
@@ -213,6 +215,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
       renderRightText,
       onExpand,
       hideTable,
+      renderHeader,
     }),
     [
       store,
@@ -234,6 +237,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
       renderRightText,
       onExpand,
       hideTable,
+      renderHeader,
     ]
   )
 

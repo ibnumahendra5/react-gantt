@@ -6,7 +6,7 @@ import { Gantt } from '../../types'
 import './index.less'
 
 const TableHeader: React.FC = () => {
-  const { store } = useContext(Context)
+  const { store, renderHeader } = useContext(Context)
   const minorList = store.getMinorList()
 
   const { viewTypeList } = store
@@ -31,12 +31,6 @@ const TableHeader: React.FC = () => {
         .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
     }
 
-    // if (hasActive === 'quarter') {
-    //   nextRange = dayjs(minorList[minorList.length - 1].key)
-    //     .add(90, 'day')
-    //     .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
-    // }
-
     store.scrollGoToDay(nextRange)
   }, [store, minorList])
 
@@ -54,45 +48,42 @@ const TableHeader: React.FC = () => {
         .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
     }
 
-    // if (hasActive === 'quarter') {
-    //   prevRange = dayjs(date)
-    //     .subtract(totalDay + 90, 'day')
-    //     .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
-    // }
-
     store.scrollGoToDay(prevRange)
   }, [store, minorList])
 
   return (
-    <aside className='gant-aside row'>
-      <div className='col-md-6'>
-        <button className='btn-range' onClick={handleScrollBackDay}>
-          &lt;
-        </button>
-        <span className='time-range'>
-          {dayjs(minorList[0].key).format('DD MMMM YYYY')} -{' '}
-          {dayjs(minorList[minorList.length - 1].key).format('DD MMMM YYYY')}
-        </span>
-        <button className='btn-range' onClick={handleScrollNextDay}>
-          &gt;
-        </button>
-      </div>
-      <div className='col-md-6'>
-        <div className='btn-group'>
-          {viewTypeList.map(item => (
-            <button
-              key={item.type}
-              className={hasActive === item.type ? 'active' : ''}
-              onClick={() => {
-                handleSelect(item)
-              }}
-            >
-              {item.label}
-            </button>
-          ))}
+    <>
+      <aside className='gant-aside row'>
+        <div className='col-md-6'>
+          <button className='btn-range' onClick={handleScrollBackDay}>
+            &lt;
+          </button>
+          <span className='time-range'>
+            {dayjs(minorList[0].key).format('DD MMMM YYYY')} -{' '}
+            {dayjs(minorList[minorList.length - 1].key).format('DD MMMM YYYY')}
+          </span>
+          <button className='btn-range' onClick={handleScrollNextDay}>
+            &gt;
+          </button>
         </div>
-      </div>
-    </aside>
+        <div className='col-md-6'>
+          <div className='btn-group'>
+            {viewTypeList.map(item => (
+              <button
+                key={item.type}
+                className={hasActive === item.type ? 'active' : ''}
+                onClick={() => {
+                  handleSelect(item)
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </aside>
+      {renderHeader}
+    </>
   )
 }
 export default observer(TableHeader)

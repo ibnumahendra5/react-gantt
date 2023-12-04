@@ -39,7 +39,7 @@ export interface GanttContext<RecordType = DefaultRecordType> {
   renderLeftText?: (barInfo: Gantt.Bar<RecordType>) => React.ReactNode
   renderRightText?: (barInfo: Gantt.Bar<RecordType>) => React.ReactNode
   onExpand?: (record: Gantt.Record<RecordType>, collapsed: boolean) => void
-
+  renderHeader?: React.ReactNode
   hideTable?: boolean
 }
 const context = createContext<GanttContext>({} as GanttContext)
