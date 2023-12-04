@@ -295,6 +295,27 @@ class GanttStore {
   }
 
   @computed get todayTranslateX() {
+
+    // if (this.sightConfig.type === 'day' || this.sightConfig.type === 'threeDay') {
+    //   return dayjs().startOf('day').valueOf() / this.pxUnitAmp
+    // }
+
+    // if week
+    if (this.sightConfig.type === 'week') {
+      return dayjs().weekday(1).startOf('day').valueOf() / this.pxUnitAmp
+    }
+
+    // if month
+    if (this.sightConfig.type === 'month') {
+      return dayjs().startOf('month').valueOf() / this.pxUnitAmp
+    }
+
+    // if quarter
+    if (this.sightConfig.type === 'quarter') {
+      return dayjs().startOf('quarter').valueOf() / this.pxUnitAmp
+    }
+    
+
     return dayjs().startOf('day').valueOf() / this.pxUnitAmp
   }
 
@@ -723,7 +744,7 @@ class GanttStore {
     const baseTop = TOP_PADDING + this.rowHeight / 2 - height / 2
     const topStep = this.rowHeight
 
-    const dateTextFormat = (startX: number) => dayjs(startX * pxUnitAmp).format('YYYY-MM-DD')
+    const dateTextFormat = (startX: number) => dayjs(startX * pxUnitAmp).format('DD MMMM YYYY')
 
     const getDateWidth = (start: number, endX: number) => {
       const startDate = dayjs(start * pxUnitAmp)

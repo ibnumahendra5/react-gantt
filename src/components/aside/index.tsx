@@ -21,23 +21,46 @@ const TableHeader: React.FC = () => {
   )
 
   const handleScrollNextDay = useCallback(() => {
-    const date = dayjs(minorList[1].key).format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    let nextRange = dayjs(minorList[minorList.length - 1].key)
+      .add(1, 'day')
+      .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
 
-    store.scrollGoToDay(date)
+    if (hasActive === 'week') {
+      nextRange = dayjs(minorList[minorList.length - 1].key)
+        .add(7, 'day')
+        .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    }
+
+    // if (hasActive === 'quarter') {
+    //   nextRange = dayjs(minorList[minorList.length - 1].key)
+    //     .add(90, 'day')
+    //     .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    // }
+
+    store.scrollGoToDay(nextRange)
   }, [store, minorList])
 
   const handleScrollBackDay = useCallback(() => {
     const date = dayjs(minorList[0].key).format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    const totalDay = dayjs(minorList[minorList.length - 1].key).diff(dayjs(minorList[0].key), 'day')
 
-    const dateMinOne = dayjs(date).subtract(1, 'day').format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
-    const dateMinWeek = dayjs(date).subtract(7, 'day').format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    let prevRange = dayjs(date)
+      .subtract(totalDay + 1, 'day')
+      .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
 
     if (hasActive === 'week') {
-      store.scrollGoToDay(dateMinWeek)
-      return
+      prevRange = dayjs(date)
+        .subtract(totalDay + 7, 'day')
+        .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
     }
 
-    store.scrollGoToDay(dateMinOne)
+    // if (hasActive === 'quarter') {
+    //   prevRange = dayjs(date)
+    //     .subtract(totalDay + 90, 'day')
+    //     .format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    // }
+
+    store.scrollGoToDay(prevRange)
   }, [store, minorList])
 
   return (
