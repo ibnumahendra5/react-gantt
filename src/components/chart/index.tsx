@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { memo, useCallback, useContext, useEffect } from 'react'
+import React,{ memo,useCallback,useContext,useEffect } from 'react'
 import Context from '../../context'
 import BarList from '../bar-list'
 import BarThumbList from '../bar-thumb-list'

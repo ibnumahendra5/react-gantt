@@ -13,6 +13,7 @@ const SelectionIndicator: React.FC = () => {
 
   return showSelectionIndicator ? (
     <div
+      id='selection-indicator'
       className={prefixClsSelectionIndicator}
       style={{
         height: rowHeight,

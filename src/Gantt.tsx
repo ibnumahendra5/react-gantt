@@ -1,6 +1,10 @@
+// import { Document, Page, View } from '@react-pdf/renderer'
 import { useSize } from 'ahooks'
 import { Dayjs } from 'dayjs'
-import React, { useContext, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
+import React, { useContext, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import generatePDF, { Options } from 'react-to-pdf'
 import Aside from './components/aside'
 import Chart from './components/chart'
 import Divider from './components/divider'
@@ -26,15 +30,18 @@ const Body: React.FC = ({ children }) => {
   const { store } = useContext(Context)
   const reference = useRef<HTMLDivElement>(null)
   const size = useSize(reference)
+
   useEffect(() => {
     store.syncSize(size)
   }, [size, store])
+
   return (
-    <div className={`${prefixCls}-body`} ref={reference}>
+    <div id={'content-id'} className={`${prefixCls}-body`} ref={reference}>
       {children}
     </div>
   )
 }
+
 export interface GanttProps<RecordType = DefaultRecordType> {
   data: Gantt.Record<RecordType>[]
   columns: Gantt.Column[]
@@ -152,6 +159,8 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
   } = props
 
   const store = useMemo(() => new GanttStore({ rowHeight, disabled, highlight, customSights, locale }), [rowHeight])
+  const [isExport, setIsExport] = useState(false)
+
   useEffect(() => {
     store.setData(data, startDateKey, endDateKey)
   }, [data, endDateKey, startDateKey, store])
@@ -237,10 +246,94 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
     ]
   )
 
-  // get type
+  const getTargetElement = () => document.getElementById('content-id')
+
+  const handleGeneratePDF = (getTargetElement: any, options: Options) => {
+    setIsExport(true)
+
+    setTimeout(() => {
+      generatePDF(getTargetElement, options)
+    }, 1000)
+  }
+
+  async function printDocument() {
+    return new Promise<void>((resolve, reject) => {
+      const input = document.getElementById('content-id')
+      setIsExport(true)
+
+      html2canvas(input, {
+        onclone: document => {
+          // hidden
+          document.getElementById('aside-header').style.display = 'none'
+          document.getElementById('divider').style.display = 'none'
+          document.getElementById('scroll-bar').style.display = 'none'
+
+          if (document.getElementById('scroll-top')) {
+            document.getElementById('scroll-top').style.display = 'none'
+          }
+
+          if (document.getElementById('selection-indicator')) {
+            document.getElementById('selection-indicator').style.display = 'none'
+          }
+        },
+      })
+        .then(canvas => {
+          let imgWidth = 208
+          let imgHeight = (canvas.height * imgWidth) / canvas.width
+
+          console.log(imgHeight)
+
+          const imgData = canvas.toDataURL('img/png')
+          const pdf = new jsPDF('p', 'mm', [297, 210])
+
+          pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight)
+
+          // Save the PDF and only after it's saved, set isExport to false
+          return pdf.save('download.pdf', { returnPromise: true })
+        })
+        .then(() => {
+          setIsExport(false)
+          resolve()
+        })
+        .catch(error => {
+          setIsExport(false)
+          reject(error)
+        })
+    })
+  }
 
   return (
     <Context.Provider value={ContextValue}>
+      {/* <button
+        onClick={() =>
+          handleGeneratePDF(getTargetElement, {
+            // ...options,
+            filename: 'gantt-chart.pdf',
+            method: 'save',
+            page: {
+              margin: 10,
+              format: 'A4',
+              orientation: 'landscape',
+            },
+            overrides: {
+              pdf: {
+                compress: true,
+                floatPrecision: 100,
+                precision: 100,
+                unit: 'mm',
+              },
+              canvas: {
+                useCORS: true,
+              },
+            },
+          })
+        }
+      >
+        Download PDF
+      </button> */}
+
+      <button onClick={printDocument}>Save as PDF</button>
+
       <Body>
         <Aside />
         <header

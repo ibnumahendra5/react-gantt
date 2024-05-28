@@ -41,6 +41,7 @@ const ScrollBar: React.FC = () => {
 
   return (
     <div
+      id='scroll-bar'
       role='none'
       className={prefixClsScrollBar}
       style={{ left: tableWidth, width: viewWidth }}

@@ -37,11 +37,11 @@ const Button = ({
 )
 
 const App = () => {
-  const data = new Array(5).fill(null).map((_, index) => ({
+  const data = new Array(10).fill(null).map((_, index) => ({
     id: index + 1,
     name: 'Drainage',
-    startDate: '2023-10-10',
-    endDate: '2023-10-20',
+    startDate: '2024-05-10',
+    endDate: '2024-05-30',
     collapsed: false,
     disabled: true,
     backgroundColor: '#5648FB',
@@ -62,8 +62,8 @@ const App = () => {
     children: [
       {
         id: index + 10,
-        startDate: '2023-10-10',
-        endDate: '2023-10-15',
+        startDate: '2024-05-20',
+        endDate: '2025-05-31',
         name: 'Lay Drainage Pipes',
         collapsed: false,
         content: '123123123',
@@ -79,8 +79,8 @@ const App = () => {
       },
       {
         id: index + 20,
-        startDate: '2023-10-15',
-        endDate: '2023-10-20',
+        startDate: '2023-05-15',
+        endDate: '2023-05-25',
         name: 'Roofer',
         collapsed: false,
         content: '123123123',
@@ -96,8 +96,8 @@ const App = () => {
         children: [
           {
             id: index + 30,
-            startDate: '2023-10-15',
-            endDate: '2023-10-20',
+            startDate: '2024-05-15',
+            endDate: '2024-05-20',
             name: 'Lay Drainage Pipes',
             collapsed: false,
             content: '123123123',
@@ -137,21 +137,15 @@ const App = () => {
 
   return (
     <div style={{ width: '100%', height: 500 }}>
-      <Button active onClick={() => hightLightById(5)}>
+      {/* <Button active onClick={() => hightLightById(5)}>
         Highlight By Id 5
-      </Button>
-      <Button active onClick={() => hightLightById(2)}>
-        Highlight By Id 2
-      </Button>
-      <Button active onClick={() => hightLightById(4)}>
-        Highlight By Id 4
       </Button>
       <Button active onClick={disableHighlight}>
         Disable Highlight
       </Button>
       <Button active onClick={onlyAssigneeMe}>
         Only Assignee Me
-      </Button>
+      </Button> */}
       <RcGantt<Data>
         data={data}
         showUnitSwitch={false}

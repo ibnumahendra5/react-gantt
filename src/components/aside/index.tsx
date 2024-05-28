@@ -41,7 +41,7 @@ const TableHeader: React.FC = () => {
   }, [store, minorList])
 
   return (
-    <aside className='gant-aside row'>
+    <aside id='aside-header' className='gant-aside row'>
       <div className='col-md-6'>
         <button className='btn-range' onClick={handleScrollBackDay}>
           &lt;

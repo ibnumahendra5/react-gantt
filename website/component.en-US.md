@@ -8,11 +8,11 @@ nav:
 
 <!-- 其他 Markdown 内容 -->
 
-## Component
+<!-- ## Component
 
 ### Basic Component
 
-use `data` `columns` `onUpdate` config, Show a basic Gantt chart
+use `data` `columns` `onUpdate` config, Show a basic Gantt chart -->
 
 <code src="./demo/basic.en-US.tsx"></code>
 
@@ -58,7 +58,7 @@ Introducing the use of the built-in methods on `alwaysShowTaskBar`, `unit` and `
 
 <code src="./demo/custom.tsx"></code> -->
 
-## Type Definition
+<!-- ## Type Definition
 
 ### `Column` Definition
 
@@ -173,4 +173,4 @@ has `innerRef`
 | 参数           | 说明           | 类型       | 默认值 |
 | -------------- | -------------- | ---------- | ------ |
 | backToday      | backToday      | `Function` |
-| getWidthByDate | getWidthByDate | `Function` |
+| getWidthByDate | getWidthByDate | `Function` | -->
