@@ -157,9 +157,29 @@ const App = () => {
         }
         customSights={[
           {
-            label: 'Three Day',
+            label: 'Daily',
+            value: Gantt.ESightValues.day,
+            type: 'day',
+          },
+          {
+            label: '3 Days',
             value: Gantt.ESightValues.threeDay,
             type: 'threeDay',
+          },
+          {
+            label: 'Weekly',
+            value: Gantt.ESightValues.week,
+            type: 'week',
+          },
+          {
+            label: 'Monthly',
+            value: Gantt.ESightValues.month,
+            type: 'month',
+          },
+          {
+            label: 'Quarterly',
+            value: Gantt.ESightValues.quarter,
+            type: 'quarter',
           },
         ]}
         columns={[

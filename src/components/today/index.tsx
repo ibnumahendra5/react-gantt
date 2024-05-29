@@ -21,7 +21,7 @@ const Today: React.FC = () => {
           height: store.bodyScrollHeight,
           backgroundColor: 'rgba(187, 182, 253, 0.4)',
           marginLeft: 0,
-          width: minorList[0].width,
+          width: minorList[0].width - 1,
         }}
       />
     </div>

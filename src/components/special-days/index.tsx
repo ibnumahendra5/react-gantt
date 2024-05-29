@@ -28,7 +28,7 @@ const SpecialDays: React.FC = () => {
             key={index}
             className={`${prefixCls}-special-days`}
             style={{
-              transform: `translate(${store.getTranslateXByDate(dayjs(item.date).format('YYYY-MM-DD')) - 10}px)`,
+              transform: `translate(${store.getTranslateXByDate(dayjs(item.date).format('YYYY-MM-DD'))}px)`,
             }}
             onMouseEnter={e =>
               showTooltip(`Special day: ${dayjs(item.date).format('YYYY-MM-DD')}`, e.clientX, e.clientY)
@@ -38,6 +38,9 @@ const SpecialDays: React.FC = () => {
               className={`${prefixCls}-special-days_line`}
               style={{
                 height: store.bodyScrollHeight,
+                backgroundColor: 'rgba(253, 182, 182, 0.4)',
+                marginLeft: 0,
+                width: minorList[0].width - 1,
               }}
             />
           </div>
