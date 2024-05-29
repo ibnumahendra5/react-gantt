@@ -294,6 +294,27 @@ class GanttStore {
   }
 
   @computed get todayTranslateX() {
+
+    // if (this.sightConfig.type === 'day' || this.sightConfig.type === 'threeDay') {
+    //   return dayjs().startOf('day').valueOf() / this.pxUnitAmp
+    // }
+
+    // if week
+    if (this.sightConfig.type === 'week') {
+      return dayjs().weekday(1).startOf('day').valueOf() / this.pxUnitAmp
+    }
+
+    // if month
+    if (this.sightConfig.type === 'month') {
+      return dayjs().startOf('month').valueOf() / this.pxUnitAmp
+    }
+
+    // if quarter
+    if (this.sightConfig.type === 'quarter') {
+      return dayjs().startOf('quarter').valueOf() / this.pxUnitAmp
+    }
+    
+
     return dayjs().startOf('day').valueOf() / this.pxUnitAmp
   }
 
@@ -518,7 +539,7 @@ class GanttStore {
           return start.endOf('day')
         },
         threeDay() {
-          return start.add(2, 'day')
+          return start.add(2, 'day').endOf('day')
         },
         week() {
           return start.weekday(7).hour(23).minute(59).second(59)
@@ -542,13 +563,21 @@ class GanttStore {
       if (this.sightConfig.type === 'halfYear') {
         return date.format(format) + (fstHalfYear.has(date.month()) ? this.locale.firstHalf : this.locale.secondHalf)
       }
-
+      
       // if three days return start date - end date
       if (this.sightConfig.type === 'threeDay') {
         const start = date.startOf('day')
-        const end = date.add(2, 'day')
+        const end = date.add(2, 'day').endOf('day')
+        
         return `${start.format(format)} - ${end.format(format)}`
       }
+
+      // // if three days return start date - end date
+      // if (this.sightConfig.type === 'threeDay') {
+      //   const start = date.startOf('day')
+      //   const end = date.add(2, 'day')
+      //   return `${start.format(format)} - ${end.format(format)}`
+      // }
 
       // if week return range of date
       if (this.sightConfig.type === 'week') {
@@ -634,7 +663,7 @@ class GanttStore {
     }
     const threeDayRect = () => {
       const stAmp = date.startOf('day')
-      const endAmp = date.add(2, 'day')
+      const endAmp = date.add(2, 'day').endOf('day')
       // @ts-ignore
       const left = stAmp / this.pxUnitAmp
       // @ts-ignore
@@ -734,7 +763,7 @@ class GanttStore {
     const baseTop = TOP_PADDING + this.rowHeight / 2 - height / 2
     const topStep = this.rowHeight
 
-    const dateTextFormat = (startX: number) => dayjs(startX * pxUnitAmp).format('YYYY-MM-DD')
+    const dateTextFormat = (startX: number) => dayjs(startX * pxUnitAmp).format('DD MMMM YYYY')
 
     const getDateWidth = (start: number, endX: number) => {
       const startDate = dayjs(start * pxUnitAmp)

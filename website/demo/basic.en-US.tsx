@@ -1,4 +1,4 @@
-import RcGantt, { enUS, GanttRef } from 'ibnu-rc-gantt'
+import RcGantt, { enUS, Gantt, GanttRef } from 'ibnu-rc-gantt'
 import React, { useRef } from 'react'
 
 interface Data {
@@ -150,6 +150,18 @@ const App = () => {
         data={data}
         showUnitSwitch={false}
         innerRef={ref as any}
+        renderHeader={
+          <div className='row'>
+            <div className='col-md-6'>29 October 2024 - 1 April 2025</div>
+          </div>
+        }
+        customSights={[
+          {
+            label: 'Three Day',
+            value: Gantt.ESightValues.threeDay,
+            type: 'threeDay',
+          },
+        ]}
         columns={[
           {
             name: 'name',
