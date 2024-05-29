@@ -542,7 +542,7 @@ class GanttStore {
           return start.endOf('day')
         },
         threeDay() {
-          return start.add(2, 'day')
+          return start.add(2, 'day').endOf('day')
         },
         week() {
           return start.weekday(7).hour(23).minute(59).second(59)
@@ -575,7 +575,8 @@ class GanttStore {
         // if three days return start date - end date
         if (this.sightConfig.type === 'threeDay') {
           const start = date.startOf('day')
-          const end = date.add(2, 'day')
+          const end = date.add(2, 'day').endOf('day')
+          
           return `${start.format(format)} - ${end.format(format)}`
         }
 
@@ -643,7 +644,7 @@ class GanttStore {
     }
     const threeDayRect = () => {
       const stAmp = date.startOf('day')
-      const endAmp = date.add(2, 'day')
+      const endAmp = date.add(2, 'day').endOf('day')
       // @ts-ignore
       const left = stAmp / this.pxUnitAmp
       // @ts-ignore
