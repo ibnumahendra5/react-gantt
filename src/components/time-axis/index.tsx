@@ -1,8 +1,9 @@
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import Context from '../../context'
+import { specialDaysStore } from '../../hooks/specialDays'
 import DragResize from '../drag-resize'
 import './index.less'
 
@@ -31,41 +32,25 @@ const TimeAxis: React.FC = () => {
     [sightConfig, isToday]
   )
 
-  const [specialDays, setSpecialDays] = useState([])
-
   // Get special days around the current year
   useEffect(() => {
     const today = getToday('YYYY')
-    const getSpecialDays = async () => {
-      const res = await getSpecialsDay(today)
-
-      setSpecialDays(res)
-    }
-    getSpecialDays()
+    specialDaysStore.getSpecialsDay(today)
   }, [])
 
-  const handleSpecialDays = useCallback(
-    item => {
-      const { key } = item
-      const { type } = sightConfig
+  const handleSpecialDays = item => {
+    const { key } = item
+    const { type } = sightConfig
+    // const items = specialDays?.items
+    const items = specialDaysStore.specialDays?.items
 
-      if (type === 'day' && specialDays.length > 0) {
-        specialDays.forEach(day => {
-          const formattedKey = dayjs(key).format('DD/MM/YYYY')
+    if (type === 'day' && items?.length > 0) {
+      const formattedKey = dayjs(key).format('YYYY-MM-DD')
+      return items.some(item => item.date === formattedKey)
+    }
 
-          console.log(day?.ActualDate, formattedKey)
-
-          if (day?.ActualDate === formattedKey) {
-            return true
-          }
-        })
-
-        return false
-      }
-      return false
-    },
-    [sightConfig, specialDays]
-  )
+    return false
+  }
 
   return (
     <DragResize
