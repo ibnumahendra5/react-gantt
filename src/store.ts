@@ -11,7 +11,7 @@ import throttle from 'lodash/throttle'
 import { action, computed, observable, runInAction, toJS } from 'mobx'
 import React, { createRef } from 'react'
 import { HEADER_HEIGHT, TOP_PADDING } from './constants'
-import { GanttProps as GanttProperties, GanttLocale, defaultLocale } from './Gantt'
+import { defaultLocale, GanttLocale, GanttProps as GanttProperties } from './Gantt'
 import { Gantt } from './types'
 import { flattenDeep, transverseData } from './utils'
 
@@ -96,7 +96,7 @@ class GanttStore {
     this.locale = locale
   }
 
-  locale = {...defaultLocale}
+  locale = { ...defaultLocale }
 
   _wheelTimer: number | undefined
 
@@ -177,7 +177,6 @@ class GanttStore {
   getLastDate() {
     return dayjs().add(27, 'day').toString()
   }
-  
 
   setIsRestDay(function_: (date: string) => boolean) {
     this.isRestDay = function_ || isRestDay
@@ -285,12 +284,12 @@ class GanttStore {
     this.setTranslateX(translateX)
   }
 
-  @action scrollGoToDay(date:string) {    
+  @action scrollGoToDay(date: string) {
     const translateX = this.getTranslateXByDate(date)
     this.setTranslateX(translateX)
   }
 
-  getTranslateXByDate(date: string) {    
+  getTranslateXByDate(date: string) {
     return dayjs(date).startOf('day').valueOf() / this.pxUnitAmp
   }
 
@@ -385,19 +384,19 @@ class GanttStore {
     const format = majorFormatMap[type]
 
     const getNextDate = (start: Dayjs) => {
-      if (type === 'day' || type=== 'threeDay' ) return start.add(1, 'month')
+      if (type === 'day' || type === 'threeDay') return start.add(1, 'month')
 
       return start.add(1, 'year')
     }
 
     const getStart = (date: Dayjs) => {
-      if (type === 'day' || type=== 'threeDay' ) return date.startOf('month')
+      if (type === 'day' || type === 'threeDay') return date.startOf('month')
 
       return date.startOf('year')
     }
 
     const getEnd = (date: Dayjs) => {
-      if (type === 'day' || type=== 'threeDay' ) return date.endOf('month')
+      if (type === 'day' || type === 'threeDay') return date.endOf('month')
 
       return date.endOf('year')
     }
@@ -408,7 +407,7 @@ class GanttStore {
 
     // 对可视区域内的时间进行迭代
     while (currentDate.isBetween(translateAmp - 1, endAmp + 1)) {
-      const majorKey = currentDate.format(format)      
+      const majorKey = currentDate.format(format)
 
       let start = currentDate
       const end = getEnd(start)
@@ -461,10 +460,8 @@ class GanttStore {
     const endAmp = startAmp + this.getDurationAmp()
     const format = minorFormatMap[this.sightConfig.type]
 
-
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const getNextDate = (start: Dayjs) => {
-      
       const map = {
         day() {
           return start.add(1, 'day')
@@ -485,11 +482,11 @@ class GanttStore {
           return start.add(6, 'month')
         },
       }
-      
+
       return map[this.sightConfig.type]()
     }
+
     const setStart = (date: Dayjs) => {
-      
       const map = {
         day() {
           return date.startOf('day')
@@ -511,7 +508,7 @@ class GanttStore {
 
           return date.month(6).startOf('month')
         },
-      }      
+      }
 
       return map[this.sightConfig.type]()
     }
@@ -543,44 +540,39 @@ class GanttStore {
     }
     const getMinorKey = (date: Dayjs) => {
       if (this.sightConfig.type === 'halfYear') {
-        return (
-          date.format(format) +
-          (fstHalfYear.has(date.month())
-            ? this.locale.firstHalf
-            : this.locale.secondHalf)
-        )
+        return date.format(format) + (fstHalfYear.has(date.month()) ? this.locale.firstHalf : this.locale.secondHalf)
       }
-      
-        // if three days return start date - end date
-        if (this.sightConfig.type === 'threeDay') {
-          const start = date.startOf('day')
-          const end = date.add(2, 'day')
-          return `${start.format(format)} - ${end.format(format)}`
-        }
 
-        // if week return range of date
-        if (this.sightConfig.type === 'week') {
-          const start = date.weekday(1).hour(0).minute(0).second(0)
-          const end = date.weekday(7).hour(23).minute(59).second(59)
-          return `${start.format('DD MMM')} - ${end.format('DD MMM')}`
-        }
+      // if three days return start date - end date
+      if (this.sightConfig.type === 'threeDay') {
+        const start = date.startOf('day')
+        const end = date.add(2, 'day')
+        return `${start.format(format)} - ${end.format(format)}`
+      }
 
-        // if quarter return range of date
-        if (this.sightConfig.type === 'quarter') {
-          const start = date.startOf('quarter')
-          const end = date.endOf('quarter')
-          return `${start.format('DD MMM')} - ${end.format('DD MMM')}`
-        }
+      // if week return range of date
+      if (this.sightConfig.type === 'week') {
+        const start = date.weekday(1).hour(0).minute(0).second(0)
+        const end = date.weekday(7).hour(23).minute(59).second(59)
+        return `${start.format('DD MMM')} - ${end.format('DD MMM')}`
+      }
+
+      // if quarter return range of date
+      if (this.sightConfig.type === 'quarter') {
+        const start = date.startOf('quarter')
+        const end = date.endOf('quarter')
+        return `${start.format('DD MMM')} - ${end.format('DD MMM')}`
+      }
 
       return date.format(format)
     }
 
     const getExtKey = (date: Dayjs) => {
       // get sun, mon, tue, wed, thu, fri, sat
-        if (this.sightConfig.type === 'day') {
-            return date.format('ddd');
-          }
-      return "";
+      if (this.sightConfig.type === 'day') {
+        return date.format('ddd')
+      }
+      return ''
     }
 
     // 初始化当前时间
@@ -591,7 +583,7 @@ class GanttStore {
       const extKey = getExtKey(currentDate)
       const start = setStart(currentDate)
       const end = setEnd(start)
-      
+
       dates.push({
         // label: minorKey.split('-').pop() as string,
         label: minorKey,
@@ -603,6 +595,26 @@ class GanttStore {
     }
 
     return this.minorAmp2Px(dates)
+  }
+
+  async getSpecialsDay(year: string) {
+    const token = 'Bearer 71|hm1cIqJo5bQ0JgHh1cLIsfD1Zy1An8z3hmTCsbvjd80cefbc'
+    try {
+      const res = await fetch(
+        `https://api-staging.constructapp.team/v2/project/tasks/nz-holidays?year=${year}&key=OR10nI9RXgLYzrPakyfZDVU`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+            withCredentials: 'true',
+          },
+        }
+      )
+      return await res.json()
+    } catch (error) {
+      return error
+    }
   }
 
   startXRectBar = (startX: number) => {
@@ -673,12 +685,11 @@ class GanttStore {
     return ampList.map(item => {
       const { startDate } = item
       const { endDate } = item
-      
 
       const { label, ext } = item
       const left = startDate.valueOf() / pxUnitAmp
       const width = (endDate.valueOf() - startDate.valueOf()) / pxUnitAmp
-      
+
       let isWeek = false
       if (this.sightConfig.type === 'day') isWeek = this.isRestDay(startDate.toString())
 
@@ -961,59 +972,59 @@ class GanttStore {
   isToday(key: string) {
     const now = dayjs().format('YYYY-MM-DD')
     const target = dayjs(key).format('YYYY-MM-DD')
+
     return target === now
   }
 
+  getToday(format?: string) {
+    return dayjs().format(format || 'YYYY-MM-DD')
+  }
+
   @action hightLightById(id: number) {
-  // Loop through the bar list and update the highlight status
+    // Loop through the bar list and update the highlight status
     this.getBarList.forEach(item => {
       if (item.task.record.id === id) {
-        const translateX = item.translateX - this.viewWidth / 2;
-        this.setTranslateX(translateX);
-        item.record.highlight = true;
+        const translateX = item.translateX - this.viewWidth / 2
+        this.setTranslateX(translateX)
+        item.record.highlight = true
 
         // hovered
-        this.showHighlightIndicator = true;
-        const topValue = Math.floor((item.translateY - TOP_PADDING) / this.rowHeight) * this.rowHeight + TOP_PADDING;
-        this.highlightIndicatorTop = topValue;
-
+        this.showHighlightIndicator = true
+        const topValue = Math.floor((item.translateY - TOP_PADDING) / this.rowHeight) * this.rowHeight + TOP_PADDING
+        this.highlightIndicatorTop = topValue
       } else {
         // when the id is not matched, disable the highlight
-        item.record.highlight = false;
+        item.record.highlight = false
       }
-
 
       // disable the highlight after 5 seconds
       if (this.showHighlightIndicator) {
-          setTimeout(() => {
-            this.showHighlightIndicator = false
-            this.getBarList.forEach(item => {
-              item.record.highlight = false;
-            });
-          }, 3000);
+        setTimeout(() => {
+          this.showHighlightIndicator = false
+          this.getBarList.forEach(item => {
+            item.record.highlight = false
+          })
+        }, 3000)
       }
-    });
+    })
   }
 
   @action disableHighlight() {
     this.getBarList.forEach(item => {
-      item.record.highlight = false;
-    });
-    this.showHighlightIndicator = false;
-  } 
-
-  
-  @action onlyAssigneeMe(id:number ) {
-    
-    this.getBarList.forEach(item => {
-      if (item.task.record.id === id) {
-        item.record.disabled = false;
-      } else {
-        item.record.disabled = true;
-      }
-    });
+      item.record.highlight = false
+    })
+    this.showHighlightIndicator = false
   }
 
+  @action onlyAssigneeMe(id: number) {
+    this.getBarList.forEach(item => {
+      if (item.task.record.id === id) {
+        item.record.disabled = false
+      } else {
+        item.record.disabled = true
+      }
+    })
+  }
 }
 
 export default GanttStore

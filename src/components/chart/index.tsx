@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite'
-import React,{ memo,useCallback,useContext,useEffect } from 'react'
+import React, { memo, useCallback, useContext, useEffect } from 'react'
 import Context from '../../context'
 import BarList from '../bar-list'
 import BarThumbList from '../bar-thumb-list'
 import Dependencies from '../dependencies'
 import DragPresent from '../drag-present'
+import SpecialDays from '../special-days'
 import Today from '../today'
 import './index.less'
 
@@ -95,6 +96,7 @@ const Chart: React.FC = () => {
         <BarThumbList />
         <BarList />
         <Today />
+        <SpecialDays />
       </div>
     </div>
   )
