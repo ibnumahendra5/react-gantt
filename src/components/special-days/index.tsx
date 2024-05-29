@@ -1,48 +1,53 @@
+import dayjs from 'dayjs'
 import { observer } from 'mobx-react-lite'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Context from '../../context'
+import { specialDaysStore } from '../../hooks/specialDays'
 import './index.less'
 const SpecialDays: React.FC = () => {
   const { store, prefixCls } = useContext(Context)
 
-  const { sightConfig, getSpecialsDay } = store
+  const minorList = store.getMinorList()
+  const specialDays = specialDaysStore.specialDays
 
-  // const handleSpecialDays = useCallback(
-  //   async item => {
-  //     const { key } = item
-  //     const { type } = sightConfig
+  const [tooltip, setTooltip] = useState({ visible: false, content: '', x: 0, y: 0 })
 
-  //     const specialDays = await getSpecialsDay()
+  const showTooltip = (content, x, y) => {
+    setTooltip({ visible: true, content, x, y })
+  }
 
-  //     console.log(specialDays)
-
-  //     specialDays.forEach(day => {
-  //       console.log(day)
-  //     })
-
-  //     console.log(store.getTranslateXByDate('Sun, 19 May 2024 08:01:58 GMT'))
-
-  //     // return specialDays
-  //   },
-  //   [sightConfig, getSpecialsDay]
-  // )
-
-  // handleSpecialDays({ key: 'Sun, 19 May 2024 07:58:56 GMT' })
+  const hideTooltip = () => {
+    setTooltip({ visible: false, content: '', x: 0, y: 0 })
+  }
 
   return (
-    <div
-      className={`${prefixCls}-special-days`}
-      style={{
-        transform: `translate(${store.todayTranslateX - 100}px)`,
-      }}
-    >
-      <div
-        className={`${prefixCls}-special-days_line`}
-        style={{
-          height: store.bodyScrollHeight,
-        }}
-      />
-    </div>
+    <>
+      {specialDays?.items?.length > 0 &&
+        specialDays?.items.map((item, index) => (
+          <div
+            key={index}
+            className={`${prefixCls}-special-days`}
+            style={{
+              transform: `translate(${store.getTranslateXByDate(dayjs(item.date).format('YYYY-MM-DD')) - 10}px)`,
+            }}
+            onMouseEnter={e =>
+              showTooltip(`Special day: ${dayjs(item.date).format('YYYY-MM-DD')}`, e.clientX, e.clientY)
+            }
+          >
+            <div
+              className={`${prefixCls}-special-days_line`}
+              style={{
+                height: store.bodyScrollHeight,
+              }}
+            />
+          </div>
+        ))}
+      {tooltip.visible && (
+        <div className='tooltip tooltip-visible' style={{ top: tooltip.y + 10 + 'px', left: tooltip.x + 10 + 'px' }}>
+          {tooltip.content}
+        </div>
+      )}
+    </>
   )
 }
 export default observer(SpecialDays)

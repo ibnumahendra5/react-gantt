@@ -18,17 +18,17 @@ export namespace Gantt {
     width: number
     left: number
     label: string
-    ext:string
+    ext: string
     isWeek: boolean
     key: string
   }
   export interface MinorAmp {
     label: string
-    ext: string;
+    ext: string
     startDate: Dayjs
     endDate: Dayjs
   }
-  export type Sight = 'day'| 'threeDay' | 'week' | 'month' | 'quarter' | 'halfYear'
+  export type Sight = 'day' | 'threeDay' | 'week' | 'month' | 'quarter' | 'halfYear'
   export type MoveType = 'left' | 'right' | 'move' | 'create'
 
   export enum ESightValues {
@@ -109,5 +109,15 @@ export namespace Gantt {
     to: string
     type: DependenceType
     color?: string
+  }
+  export interface SpecialDaysProps {
+    nextPageToken: string
+    items: {
+      description: string
+      summary: string
+      date: string
+      date_detail: Date
+      status: string
+    }[]
   }
 }

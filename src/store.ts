@@ -628,19 +628,26 @@ class GanttStore {
 
   async getSpecialsDay(year: string) {
     const token = 'Bearer 71|hm1cIqJo5bQ0JgHh1cLIsfD1Zy1An8z3hmTCsbvjd80cefbc'
+    const key = 'OR10nI9RXgLYzrPakyfZDVU'
+    const config = {
+      method: 'GET',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+        withCredentials: 'true',
+      },
+    }
     try {
       const res = await fetch(
-        `https://api-staging.constructapp.team/v2/project/tasks/nz-holidays?year=${year}&key=OR10nI9RXgLYzrPakyfZDVU`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: token,
-            'Content-Type': 'application/json',
-            withCredentials: 'true',
-          },
-        }
+        `https://api-staging.constructapp.team/v2/project/tasks/au-holidays/v2?key=${key}&year=${year}`,
+        config
       )
-      return await res.json()
+
+      // return await res.json()
+      // push to specialDays
+      const data = await res.json()
+
+      return data
     } catch (error) {
       return error
     }

@@ -1,4 +1,3 @@
-// import { Document, Page, View } from '@react-pdf/renderer'
 import { useSize } from 'ahooks'
 import { Dayjs } from 'dayjs'
 import html2canvas from 'html2canvas'
@@ -308,34 +307,6 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
 
   return (
     <Context.Provider value={ContextValue}>
-      {/* <button
-        onClick={() =>
-          handleGeneratePDF(getTargetElement, {
-            // ...options,
-            filename: 'gantt-chart.pdf',
-            method: 'save',
-            page: {
-              margin: 10,
-              format: 'A4',
-              orientation: 'landscape',
-            },
-            overrides: {
-              pdf: {
-                compress: true,
-                floatPrecision: 100,
-                precision: 100,
-                unit: 'mm',
-              },
-              canvas: {
-                useCORS: true,
-              },
-            },
-          })
-        }
-      >
-        Download PDF
-      </button> */}
-
       <button onClick={printDocument}>Save as PDF</button>
 
       <Body>
