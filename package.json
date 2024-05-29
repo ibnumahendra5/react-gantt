@@ -1,15 +1,6 @@
 {
   "name": "ibnu-rc-gantt",
-<<<<<<< HEAD
-  "version": "0.3.4",
-  "description": "<div align=\"center\">\r   <h2>rc-gantt</h2>\r   <p align=\"center\">React Gantt Component</p>\r </div>",
-  "keywords": [
-    "gantt",
-    "gantt-chart"
-  ],
-=======
   "version": "0.3.7",
->>>>>>> 88d59fb4a3825f362e6b192c1bf4f470f8acd69c
   "homepage": "https://github.com/ibnumahendra5/react-gantt/#/",
   "bugs": {
     "url": "https://github.com/ibnumahendra5/react-gantt/issues"
