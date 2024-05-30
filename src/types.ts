@@ -120,4 +120,6 @@ export namespace Gantt {
       status: string
     }[]
   }
+
+  export type LocaleSpecialDays = "au" | "nz"
 }

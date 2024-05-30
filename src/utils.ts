@@ -65,3 +65,4 @@ export function transverseData(data: Gantt.Record[] = [], startDateKey: string, 
   }
   return result
 }
+

@@ -119,7 +119,7 @@ const TableRows = () => {
                 <span
                   className={`${prefixClsTableBody}-ellipsis`}
                   style={{
-                    color: bar.record.highlight ? '#5648fb' : '#000',
+                    color: bar.record.highlight ? '#5648fb' : '#303030',
                   }}
                 >
                   {column.render ? column.render(bar.record) : bar.record[column.name]}

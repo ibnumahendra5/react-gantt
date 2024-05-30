@@ -19,6 +19,7 @@ import TimeIndicator from './components/time-indicator'
 import { BAR_HEIGHT, ROW_HEIGHT, TABLE_INDENT } from './constants'
 import Context, { GanttContext } from './context'
 import './Gantt.less'
+import { specialDaysStore } from './hooks/specialDays'
 import { zhCN } from './locales'
 import GanttStore from './store'
 import { DefaultRecordType, Gantt } from './types'
@@ -72,6 +73,7 @@ export interface GanttProps<RecordType = DefaultRecordType> {
   renderRightText?: GanttContext<RecordType>['renderLeftText']
   onExpand?: GanttContext<RecordType>['onExpand']
   renderHeader?: GanttContext<RecordType>['renderHeader']
+  renderPublicHoliday?: GanttContext<RecordType>['renderPublicHoliday']
   /**
    * 自定义日期筛选维度
    */
@@ -157,6 +159,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
     customSights = [],
     locale = { ...defaultLocale },
     hideTable = false,
+    renderPublicHoliday,
   } = props
 
   const store = useMemo(() => new GanttStore({ rowHeight, disabled, highlight, customSights, locale }), [rowHeight])
@@ -224,6 +227,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
       onExpand,
       hideTable,
       renderHeader,
+      renderPublicHoliday,
     }),
     [
       store,
@@ -246,6 +250,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
       onExpand,
       hideTable,
       renderHeader,
+      renderPublicHoliday,
     ]
   )
 
@@ -278,6 +283,10 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
           if (document.getElementById('selection-indicator')) {
             document.getElementById('selection-indicator').style.display = 'none'
           }
+
+          if (document.getElementById('date-range-header')) {
+            document.getElementById('date-range-header').style.display = 'none'
+          }
         },
       })
         .then(canvas => {
@@ -305,10 +314,45 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
     })
   }
 
+  const handleLocaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLocale = event.target.value as Gantt.LocaleSpecialDays
+    specialDaysStore.setLocale(newLocale)
+
+    const today = store.getToday('YYYY')
+    specialDaysStore.getSpecialsDay({
+      year: today,
+      locale: newLocale,
+    })
+  }
+
   return (
     <Context.Provider value={ContextValue}>
-      <button onClick={printDocument}>Save as PDF</button>
-
+      <div className='extra-wrapper'>
+        <div>
+          <select className='select-locale' onChange={handleLocaleChange}>
+            <option value='au'>Australia</option>
+            <option value='nz'>New Zealand</option>
+          </select>
+        </div>
+        <div className='export-wrapper' onClick={printDocument}>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={1.5}
+            stroke='currentColor'
+            className='size-6'
+            width='18'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3'
+            />
+          </svg>
+          <span>Export to PDF</span>
+        </div>
+      </div>
       <Body>
         <Aside />
         <header

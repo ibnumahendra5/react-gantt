@@ -41,6 +41,15 @@ export interface GanttContext<RecordType = DefaultRecordType> {
   onExpand?: (record: Gantt.Record<RecordType>, collapsed: boolean) => void
   renderHeader?: React.ReactNode
   hideTable?: boolean
+
+  // pas function to react node 
+  renderPublicHoliday?: ({
+    onClick,
+    locale,
+  }: {
+    onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+    locale: Gantt.LocaleSpecialDays
+  }) => React.ReactNode
 }
 const context = createContext<GanttContext>({} as GanttContext)
 export default context

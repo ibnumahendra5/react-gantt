@@ -151,7 +151,7 @@ const App = () => {
         showUnitSwitch={false}
         innerRef={ref as any}
         renderHeader={
-          <div className='row'>
+          <div id='date-range-header' className='row'>
             <div className='col-md-6'>29 October 2024 - 1 April 2025</div>
           </div>
         }

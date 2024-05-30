@@ -1,9 +1,21 @@
 import { action, observable, runInAction } from 'mobx'
+import { Gantt } from '../types'
+
+
 
 class SpecialDaysStore {
-  @observable specialDays = null
+  @observable specialDays: Gantt.SpecialDaysProps | null = null
 
-  @action async getSpecialsDay(year) {
+  @observable locale:Gantt.LocaleSpecialDays = 'au'
+
+  @action setLocale(value: Gantt.LocaleSpecialDays) {
+    this.locale = value;
+  }
+
+  @action async getSpecialsDay(params: {
+    year: string
+    locale: Gantt.LocaleSpecialDays
+  }) {
     const token = 'Bearer 71|hm1cIqJo5bQ0JgHh1cLIsfD1Zy1An8z3hmTCsbvjd80cefbc'
     const key = 'OR10nI9RXgLYzrPakyfZDVU'
     const config = {
@@ -17,7 +29,7 @@ class SpecialDaysStore {
 
     try {
       const res = await fetch(
-        `https://api-staging.constructapp.team/v2/project/tasks/au-holidays/v2?key=${key}&year=${year}`,
+        `https://api-staging.constructapp.team/v2/project/tasks/${params.locale ?? "au"}-holidays/v2?key=${key}&year=${params.year ?? ""}`,
         config
       )
 

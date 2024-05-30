@@ -10,7 +10,7 @@ import './index.less'
 const TimeAxis: React.FC = () => {
   const { store, prefixCls } = useContext(Context)
   const prefixClsTimeAxis = `${prefixCls}-time-axis`
-  const { sightConfig, isToday, getSpecialsDay, getToday } = store
+  const { sightConfig, isToday, getToday } = store
   const majorList = store.getMajorList()
   const minorList = store.getMinorList()
   const handleResize = useCallback(
@@ -35,13 +35,15 @@ const TimeAxis: React.FC = () => {
   // Get special days around the current year
   useEffect(() => {
     const today = getToday('YYYY')
-    specialDaysStore.getSpecialsDay(today)
+    specialDaysStore.getSpecialsDay({
+      year: today,
+      locale: specialDaysStore.locale,
+    })
   }, [])
 
   const handleSpecialDays = item => {
     const { key } = item
     const { type } = sightConfig
-    // const items = specialDays?.items
     const items = specialDaysStore.specialDays?.items
 
     if (type === 'day' && items?.length > 0) {
