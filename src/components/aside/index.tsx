@@ -55,23 +55,25 @@ const TableHeader: React.FC = () => {
     <>
       <aside id='aside-header' className='gant-aside row'>
         <div className='col-md-12 col-lg-6'>
-          <button className='btn-range' onClick={handleScrollBackDay}>
-            &lt;
-          </button>
-          <span className='time-range'>
-            {dayjs(minorList[0].key).format('DD MMMM YYYY')} -{' '}
-            {dayjs(minorList[minorList.length - 1].key).format('DD MMMM YYYY')}
-          </span>
-          <button className='btn-range' onClick={handleScrollNextDay}>
-            &gt;
-          </button>
+          <div className='range-wrapper'>
+            <button className='btn-range' onClick={handleScrollBackDay}>
+              &lt;
+            </button>
+            <span className='time-range'>
+              {dayjs(minorList[0].key).format('DD MMMM YYYY')} -{' '}
+              {dayjs(minorList[minorList.length - 1].key).format('DD MMMM YYYY')}
+            </span>
+            <button className='btn-range' onClick={handleScrollNextDay}>
+              &gt;
+            </button>
+          </div>
         </div>
         <div className='col-md-12 col-lg-6'>
           <div className='btn-group'>
             {viewTypeList.map(item => (
               <button
                 key={item.type}
-                className={hasActive === item.type ? 'active' : ''}
+                className={`btn-group-range ${hasActive === item.type ? 'active' : ''}`}
                 onClick={() => {
                   handleSelect(item)
                 }}
