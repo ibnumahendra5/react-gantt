@@ -54,7 +54,7 @@ const TableHeader: React.FC = () => {
   return (
     <>
       <aside id='aside-header' className='gant-aside row'>
-        <div className='col-md-12 col-lg-6'>
+        <div className='col-md-12 col-xxl-6'>
           <div className='range-wrapper'>
             <button className='btn-range' onClick={handleScrollBackDay}>
               &lt;
@@ -68,7 +68,7 @@ const TableHeader: React.FC = () => {
             </button>
           </div>
         </div>
-        <div className='col-md-12 col-lg-6'>
+        <div className='col-md-12 col-xxl-6'>
           <div className='btn-group'>
             {viewTypeList.map(item => (
               <button

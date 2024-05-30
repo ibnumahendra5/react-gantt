@@ -45,31 +45,7 @@
     margin-bottom: 10px;
   }
 
-  @media (max-width: 1279px) {
-    .gant-aside {
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .btn-group button {
-      border-radius: 10px !important;
-    }
-
-    .btn-group {
-      gap: 10px;
-      display: flex;
-      align-items: center;
-      flex-grow: 1;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .btn-group {
-      flex-wrap: wrap;
-    }
-
-    // .btn-group-range {}
-  }
+ 
 
   .btn-group button {
     background-color: #bbb6fd;
@@ -117,6 +93,7 @@
   .range-wrapper {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
   }
 
   .btn-range {
@@ -142,11 +119,7 @@
     text-align: center;
   }
 
-  @media (max-width: 464px) {
-    .time-range {
-      min-width: auto;
-    }
-  }
+ 
 
   .btn-export-task {
     background-color: #5648fb;
@@ -185,4 +158,40 @@
     background-color: transparent;
     border-radius: 20px;
     font-size: 14px;
+  }
+
+  @media (max-width: 1279px) {
+    .gant-aside {
+      flex-direction: column;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .btn-group button {
+      border-radius: 10px !important;
+    }
+
+    .btn-group {
+      gap: 10px;
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .btn-group {
+      flex-wrap: wrap;
+    }
+
+    .range-wrapper {
+      justify-content: space-between;
+    }
+    // .btn-group-range {}`
+  }
+
+  @media (max-width: 464px) {
+    .time-range {
+      min-width: auto;
+    }
   }
