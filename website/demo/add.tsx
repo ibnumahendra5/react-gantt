@@ -23,7 +23,6 @@ const App = () => (
         },
       ]}
       onUpdate={async (row, startDate, endDate) => {
-        console.log('update', row, startDate, endDate)
         return true
       }}
     />

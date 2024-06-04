@@ -124,7 +124,6 @@ const App = () => {
 
   const hightLightById = (id: number) => {
     if (ref && ref.current) ref.current.hightLightById(id)
-    console.log(id)
   }
 
   const disableHighlight = () => {

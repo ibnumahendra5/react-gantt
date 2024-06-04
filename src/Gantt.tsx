@@ -293,8 +293,6 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
           let imgWidth = 208
           let imgHeight = (canvas.height * imgWidth) / canvas.width
 
-          console.log(imgHeight)
-
           const imgData = canvas.toDataURL('img/png')
           const pdf = new jsPDF('p', 'mm', [297, 210])
 
@@ -316,13 +314,16 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
 
   const handleLocaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = event.target.value as Gantt.LocaleSpecialDays
+    const year = store.getVisibleYear()
+
     specialDaysStore.setLocale(newLocale)
 
-    const today = store.getToday('YYYY')
-    specialDaysStore.getSpecialsDay({
-      year: today,
-      locale: newLocale,
-    })
+    if (year !== undefined) {
+      specialDaysStore.getSpecialsDay({
+        year: year.toString(),
+        locale: newLocale,
+      })
+    }
   }
 
   return (

@@ -13,40 +13,6 @@ export const TooltipCursor: React.FC<TooltipCursorProps> = ({ children, content,
 
   const tooltipRef = useRef<HTMLDivElement>(document.createElement('div'))
 
-  // const handleMouseMove = (event: React.MouseEvent) => {
-  //   const { clientX, clientY } = event
-
-  //   // console.log('clientX', clientX, 'clientY', clientY)
-
-  //   const tooltipWidth = tooltipRef.current?.offsetWidth || 0
-  //   const tooltipHeight = tooltipRef.current?.offsetHeight || 0
-  //   const viewportWidth = window.innerWidth
-  //   const viewportHeight = window.innerHeight
-
-  //   //+12 is added to give a spice between cursor and tooltip
-  //   let tooltipX = clientX + 12
-  //   let tooltipY = clientY + 12
-
-  //   // // Check if tooltip exceeds the right side of the viewport
-  //   // if (tooltipX + tooltipWidth > viewportWidth) {
-  //   //   tooltipX = clientX - tooltipWidth - 10
-  //   // }
-
-  //   // // Check if tooltip exceeds the bottom of the viewport
-  //   // if (tooltipY + tooltipHeight > viewportHeight) {
-  //   //   tooltipY = viewportHeight - tooltipHeight - 10
-  //   // }
-
-  //   // if (tooltipY + tooltipHeight > height) {
-  //   //   tooltipY = height - tooltipHeight - 10
-  //   // }
-  //   const h = clientY * 2 + tooltipHeight
-  //   console.log(h, height, tooltipHeight, clientY)
-
-  //   // passing static x value to keep tooltip in the same position
-  //   setTooltipPosition({ x: 0, y: 100 })
-  // }
-
   const convertPosition = (cursorPosition: number, minSrc: number, maxSrc: number, minDst: number, maxDst: number) => {
     const srcRange = maxSrc - minSrc
     const dstRange = maxDst - minDst

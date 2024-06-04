@@ -294,7 +294,6 @@ class GanttStore {
   }
 
   @computed get todayTranslateX() {
-
     // if (this.sightConfig.type === 'day' || this.sightConfig.type === 'threeDay') {
     //   return dayjs().startOf('day').valueOf() / this.pxUnitAmp
     // }
@@ -313,7 +312,6 @@ class GanttStore {
     if (this.sightConfig.type === 'quarter') {
       return dayjs().startOf('quarter').valueOf() / this.pxUnitAmp
     }
-    
 
     return dayjs().startOf('day').valueOf() / this.pxUnitAmp
   }
@@ -563,12 +561,12 @@ class GanttStore {
       if (this.sightConfig.type === 'halfYear') {
         return date.format(format) + (fstHalfYear.has(date.month()) ? this.locale.firstHalf : this.locale.secondHalf)
       }
-      
+
       // if three days return start date - end date
       if (this.sightConfig.type === 'threeDay') {
         const start = date.startOf('day')
         const end = date.add(2, 'day').endOf('day')
-        
+
         return `${start.format(format)} - ${end.format(format)}`
       }
 
@@ -624,33 +622,6 @@ class GanttStore {
     }
 
     return this.minorAmp2Px(dates)
-  }
-
-  async getSpecialsDay(year: string) {
-    const token = 'Bearer 71|hm1cIqJo5bQ0JgHh1cLIsfD1Zy1An8z3hmTCsbvjd80cefbc'
-    const key = 'OR10nI9RXgLYzrPakyfZDVU'
-    const config = {
-      method: 'GET',
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/json',
-        withCredentials: 'true',
-      },
-    }
-    try {
-      const res = await fetch(
-        `https://api-staging.constructapp.team/v2/project/tasks/au-holidays/v2?key=${key}&year=${year}`,
-        config
-      )
-
-      // return await res.json()
-      // push to specialDays
-      const data = await res.json()
-
-      return data
-    } catch (error) {
-      return error
-    }
   }
 
   startXRectBar = (startX: number) => {
@@ -1014,6 +985,10 @@ class GanttStore {
 
   getToday(format?: string) {
     return dayjs().format(format || 'YYYY-MM-DD')
+  }
+
+  getVisibleYear() {
+    return dayjs(this.translateAmp).year()
   }
 
   @action hightLightById(id: number) {
